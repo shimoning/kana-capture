@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>かなキャプチャ</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-body">
+        <h1 class="title">かなキャプチャ</h1>
+        <p class="subtitle">動作プレビュー (cjs版)</p>
+      </div>
+    </header>
+    <main id="main" class="container">
+      <div id="input-area">
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="timing-realtime">反映タイミング</label>
+          </div>
+          <div class="field-body">
+            <div class="field is-narrow">
+              <div class="control">
+                <label class="radio">
+                  <input type="radio" name="timing" value="realtime" id="timing-realtime" checked>
+                  リアルタイム
+                </label>
+                <label class="radio">
+                  <input type="radio" name="timing" value="enter" id="timing-enter">
+                  エンター押下時
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label" for="input">入力</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control is-expanded">
+                <input type="text" class="input is-primary" id="input" placeholder="ここにテキストを入力してください">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="has-text-centered my-4">
+        <span class="icon is-large is-centered">
+          <i class="fas fa-down-long"></i>
+        </span>
+      </div>
+
+      <div id="output-area">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label" for="output-hiragana">ひらがな</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input type="text" class="input is-info" id="output-hiragana" placeholder="ここにひらがなが表示されます" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label" for="output-zenkaku-katakana">全角カタカナ</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input type="text" class="input is-info" id="output-zenkaku-katakana" placeholder="ここに全角カタカナが表示されます" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label" for="output-hankaku-katakana">半角カタカナ</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input type="text" class="input is-info" id="output-hankaku-katakana" placeholder="ここに半角カタカナが表示されます" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      <p>© 2025 かなコンバーター</p>
+    </footer>
+    <script src="../dist/umd/observer.umd.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {s
+        const input = document.querySelector('#input')
+
+        const outputHiragana = document.querySelector('#output-hiragana')
+        const outputZenkakuKatakana = document.querySelector('#output-zenkaku-katakana')
+        const outputHankakuKatakana = document.querySelector('#output-hankaku-katakana')
+
+        const timingRealtime = document.querySelector('#timing-realtime')
+        const timingEnter = document.querySelector('#timing-enter')
+
+        KanaCapture.setupObserver(
+          input,
+          [
+            { element: outputHiragana, type: KanaCapture.KanaType.Hiragana },
+            { element: outputZenkakuKatakana, type: KanaCapture.KanaType.ZenkakuKatakana },
+            { element: outputHankakuKatakana, type: KanaCapture.KanaType.HankakuKatakana },
+          ],
+          {
+            observeInterval: 30,
+            debug: false,
+            realtime: timingRealtime,
+            enter: timingEnter,
+            clearOnInputEmpty: true,
+          },
+        )
+      })
+    </script>
+  </body>
+</html>

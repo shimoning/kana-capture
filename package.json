@@ -1,0 +1,41 @@
+{
+  "name": "kana-capturer",
+  "version": "0.0.1",
+  "description": "Kana Japanese characters capture and converter",
+  "keywords": [
+    "japanese",
+    "kana",
+    "hiragana",
+    "katakana",
+    "hankaku",
+    "zenkaku",
+    "capture",
+    "converter"
+  ],
+  "author": "Shimon Haga",
+  "license": "MIT",
+  "repository": {
+    "homepage": "https://github.com/shimoning/kana-capturer#readme",
+    "type": "git",
+    "url": "git+ssh://git@github.com/shimoning/kana-capturer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shimoning/kana-capturer/issues"
+  },
+  "main": "src/observer.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint './src/**/*.{js,ts}'",
+    "lint:fix": "eslint --fix './src/**/*.{js,ts}'"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "eslint": "^9.18.0",
+    "globals": "^15.14.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0",
+    "vite": "^6.0.5"
+  }
+}

@@ -1,0 +1,12 @@
+.git/
+.vscode/
+node_modules/
+src/
+preview/
+test/
+.gitignore
+.node-version
+tsconfig.json
+eslint.config.mjs
+vite-env.d.ts
+vite.config.mts
