@@ -102,8 +102,7 @@
     </footer>
     <script src="../dist/umd/observer.umd.js" defer></script>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        console.log(window.KanaCapture)
+      document.addEventListener('DOMContentLoaded', () => {s
         const input = document.querySelector('#input')
 
         const outputHiragana = document.querySelector('#output-hiragana')
@@ -117,8 +116,8 @@
           input,
           [
             { element: outputHiragana, type: KanaCapture.KanaType.Hiragana },
-            { element: outputZenkakuKatakana, type: KanaType.ZenkakuKatakana },
-            { element: outputHankakuKatakana, type: KanaType.HankakuKatakana },
+            { element: outputZenkakuKatakana, type: KanaCapture.KanaType.ZenkakuKatakana },
+            { element: outputHankakuKatakana, type: KanaCapture.KanaType.HankakuKatakana },
           ],
           {
             observeInterval: 30,

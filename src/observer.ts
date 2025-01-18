@@ -1,6 +1,7 @@
+import { CaptureableCharacterPattern, CaptureableCharacterType, extractor } from './utilities/extractor'
 import { kanaConverter, KanaType } from './utilities/kanaConverter'
-
-export { kanaConverter, KanaType }
+export { KanaType, CaptureableCharacterType }
+export type { CaptureableCharacterPattern }
 
 export type Options = {
   observeInterval?: number; // unit: ms
@@ -8,6 +9,7 @@ export type Options = {
   realtime?: boolean | HTMLInputElement;
   enter?: boolean | HTMLInputElement;
   clearOnInputEmpty?: boolean;
+  captureablePatterns?: CaptureableCharacterPattern | CaptureableCharacterPattern[];
 };
 export type Output = {
   element: HTMLInputElement;
@@ -18,19 +20,16 @@ export enum OutputMode {
   ENTER,
 }
 
-// eslint-disable-next-line no-irregular-whitespace
-export const AntiHiraganaPattern = /[^ 　ぁあ-んー]/g
-export const CompactHiraganaPattern = /[ぁぃぅぇぉっゃゅょ]/g
-
 export function setupObserver(
   input: HTMLInputElement,
-  outputs: Output[] | string | string[],
+  outputs: (Output | string)[] | string,
   options: Options = {
     observeInterval: 30,
     debug: false,
     realtime: true,
     enter: false,
     clearOnInputEmpty: false,
+    captureablePatterns: CaptureableCharacterType.HIRAGANA,
   },
 ) {
   let outputMode = OutputMode.REALTIME
@@ -123,7 +122,7 @@ export function setupObserver(
    * @returns void
    */
   function _end() {
-    _debug('end')
+    _debug('end', { timer })
     if (timer) {
       clearInterval(timer)
       timer = undefined
@@ -144,9 +143,10 @@ export function setupObserver(
     }
 
     // すでに入力されている文字を取り除く
-    if (inputString.indexOf(defaultString) !== -1) {
-      inputString = inputString.replace(defaultString, '')
-    }
+    inputString = inputString.replace(
+      new RegExp('[' + defaultString + ']', 'g'),
+      '',
+    )
 
     // 同じだったら何もしない
     if (currentString === inputString) {
@@ -159,24 +159,28 @@ export function setupObserver(
       return
     }
 
-    // ひらがなを抽出して確認及び設定
-    const hiraganaString = currentString.replace(AntiHiraganaPattern, '')
-    _set(hiraganaString)
+    // セットする
+    _set(currentString)
   }
 
   /**
-   * 保存する
-   * @param hiraganaString
+   * セットする
+   * @param string
    */
-  function _set(hiraganaString: string) {
-    _debug('set', { defaultString, hiraganaString, inputValue, outputValues })
-    if (hiraganaString.length) {
-      inputValue = hiraganaString
+  function _set(string: string) {
+    _debug('set', { defaultString, string, inputValue, outputValues })
+    const extracted = extractor({
+      input: string,
+      patterns: options.captureablePatterns ?? CaptureableCharacterType.HIRAGANA,
+    })
+    console.warn({ extracted, string, inputValue, defaultString })
+    if (extracted.length === string.length) {
+      inputValue = extracted
     }
 
     activeOutputs.forEach(({ element, type }, index) => {
       const converted = kanaConverter(type, inputValue)
-      _debug('converted', { type, inputValue, after: converted, before: outputValues[index] })
+      _debug('converted', { type, string, inputValue, after: converted, before: outputValues[index] })
       if (outputMode === OutputMode.REALTIME) {
         element.value = outputValues[index] + converted
       } else if (outputMode === OutputMode.ENTER) {
@@ -185,6 +189,10 @@ export function setupObserver(
     })
   }
 
+  /**
+   * 反映する
+   * @returns void
+   */
   function _reflect() {
     activeOutputs.forEach(({ element }) => {
       if (element.dataset['kana']) {
@@ -232,6 +240,8 @@ export function setupObserver(
   input.addEventListener('compositionend', (e: CompositionEvent) => {
     _debug('compositionend', { e })
     _end()
+    _set(inputValue)
+    _reset()
     compositing = false
   })
   input.addEventListener('keydown', (e: KeyboardEvent) => {

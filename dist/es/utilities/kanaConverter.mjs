@@ -1,25 +1,28 @@
-import { isHiraganaCharCode as e } from "./isHiraganaCharCode.mjs";
-import { katakanaMap as i } from "../map/kana/hiragana2hankakuKatakana.mjs";
-var f = /* @__PURE__ */ ((a) => (a[a.Hiragana = 0] = "Hiragana", a[a.ZenkakuKatakana = 1] = "ZenkakuKatakana", a[a.HankakuKatakana = 2] = "HankakuKatakana", a))(f || {});
-function C(a, t) {
-  let n = "";
+import { isHiraganaCharCode as i } from "./isHiraganaCharCode.mjs";
+import { toKatakanaCharCode as f } from "./toKatakanaCharCode.mjs";
+import { katakanaMap as e } from "../map/kana/hiragana2hankakuKatakana.mjs";
+var u = /* @__PURE__ */ ((a) => (a[a.Hiragana = 0] = "Hiragana", a[a.ZenkakuKatakana = 1] = "ZenkakuKatakana", a[a.HankakuKatakana = 2] = "HankakuKatakana", a))(u || {});
+function h(a, t) {
+  let o = "";
   for (let r = 0; r < t.length; r++) {
-    const k = t.charCodeAt(r);
-    if (e(k)) {
-      if (a === 0)
-        n += t[r];
-      else if (a === 1)
-        n += String.fromCharCode(k + 96);
-      else if (a === 2) {
-        const o = t[r];
-        typeof i[o] == "string" && (n += i[o]);
-      }
+    const n = t.charCodeAt(r);
+    if (!i(n)) {
+      o += t[r];
+      continue;
+    }
+    if (a === 0)
+      o += t[r];
+    else if (a === 1)
+      o += String.fromCharCode(f(n));
+    else if (a === 2) {
+      const k = t[r];
+      typeof e[k] == "string" && (o += e[k]);
     }
   }
-  return n;
+  return o;
 }
 export {
-  f as KanaType,
-  C as kanaConverter
+  u as KanaType,
+  h as kanaConverter
 };
 //# sourceMappingURL=kanaConverter.mjs.map

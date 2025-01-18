@@ -1,0 +1,1 @@
+{"version":3,"file":"toKatakanaCharCode.js","sources":["../../../src/utilities/toKatakanaCharCode.ts"],"sourcesContent":["export function toKatakanaCharCode(char: number): number {\n  return char + 96\n}\n"],"names":["toKatakanaCharCode","char"],"mappings":"gFAAO,SAASA,EAAmBC,EAAsB,CACvD,OAAOA,EAAO,EAChB"}

@@ -87,7 +87,7 @@ export const katakanaMap: Record<string, string> = {
   ョ: 'ｮ',
   '。': '｡',
   '、': '､',
-  ー: 'ｰ',
+  'ー': 'ｰ',
   '「': '｢',
   '」': '｣',
   '・': '･',
