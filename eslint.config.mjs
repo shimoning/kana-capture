@@ -14,7 +14,6 @@ export default [
       quotes: ['error', 'single'],
       'comma-dangle': ['error', 'always-multiline'],
       semi: ['error', 'never'],
-      'no-unused-vars': ['warn', 'after-used'],
     },
   },
 ]
