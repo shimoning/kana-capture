@@ -1,3 +1,4 @@
+import { diff } from './utilities/diff'
 import { CaptureableCharacterPattern, CaptureableCharacterType, extractor } from './utilities/extractor'
 import { kanaConverter, KanaType } from './utilities/kanaConverter'
 export { KanaType, CaptureableCharacterType }
@@ -142,11 +143,10 @@ export function setupObserver(
       return
     }
 
+
     // すでに入力されている文字を取り除く
-    inputString = inputString.replace(
-      new RegExp('[' + defaultString + ']', 'g'),
-      '',
-    )
+    const diffResult = diff(defaultString, inputString)
+    inputString = diffResult.diff
 
     // 同じだったら何もしない
     if (currentString === inputString) {
