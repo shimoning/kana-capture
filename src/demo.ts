@@ -30,6 +30,7 @@ setupObserver(
       CaptureableCharacterType.HIRAGANA,
       CaptureableCharacterType.KUTOUTEN,
       CaptureableCharacterType.CHOUON,
+      CaptureableCharacterType.KAGIKAKKO,
     ],
   },
 )

@@ -7,6 +7,7 @@ export enum CaptureableCharacterType {
   HIRAGANA,
   KUTOUTEN,
   CHOUON,
+  KAGIKAKKO,
   ZENKAKU_SPACE,
   HANKAKU_SPACE,
   ZENKAKU_ALPHABET,
@@ -21,6 +22,7 @@ export const CaptureableCharacterMap: Record<CaptureableCharacterType, RegExp> =
   [CaptureableCharacterType.HIRAGANA]: /[ぁ-ん]/g,
   [CaptureableCharacterType.KUTOUTEN]: /[、。]/g,
   [CaptureableCharacterType.CHOUON]: /[ー]/g,
+  [CaptureableCharacterType.KAGIKAKKO]: /[「」]/g,
   /* eslint-disable-next-line no-irregular-whitespace */
   [CaptureableCharacterType.ZENKAKU_SPACE]: /[　]/g,
   [CaptureableCharacterType.HANKAKU_SPACE]: /[ ]/g,

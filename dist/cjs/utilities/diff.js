@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});function d(e,a){if(!e.length)return{before:e,after:a,diff:a,same:"",gap:0};if(e===a)return{before:e,after:a,diff:"",same:e,gap:0};const c=e.split(""),o=a.split(""),h=Math.max(c.length,o.length),r=[],l=[];let s=0;for(let t=0;t<h;t++){const n=c[t];for(let f=t+s;f<h;f++,s++){const u=o[f];if(n===u){r.push(n);break}l.push(u)}}return{before:e,after:a,diff:l.join(""),same:r.join(""),gap:s}}exports.diff=d;
+//# sourceMappingURL=diff.js.map

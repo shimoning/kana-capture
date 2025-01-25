@@ -1,4 +1,4 @@
-import { katakanaMap } from '../map/kana/zenkaku2hankakuKatakana'
+import { katakanaMap } from '../maps/kana/zenkaku2hankakuKatakana'
 export function toHankakuKatakana(zenkakuKatakana: string): string {
   let _katakana = ''
   for (let i = 0; i < zenkakuKatakana.length; i++) {
