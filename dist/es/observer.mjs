@@ -1,107 +1,108 @@
 import { diff as S } from "./utilities/diff.mjs";
-import { generateCaptureableRegExp as C, CaptureableCharacterType as I, extractor as M } from "./utilities/extractor.mjs";
-import { KanaType as g, kanaConverter as N } from "./utilities/kanaConverter.mjs";
-var w = /* @__PURE__ */ ((t) => (t[t.REALTIME = 0] = "REALTIME", t[t.ENTER = 1] = "ENTER", t))(w || {});
-function G(t, m, a = {
+import { generateCaptureableRegExp as C, CaptureableCharacterType as _, extractor as N } from "./utilities/extractor.mjs";
+import { KanaType as g, kanaConverter as P } from "./utilities/kanaConverter.mjs";
+var q = /* @__PURE__ */ ((l) => (l[l.REALTIME = 0] = "REALTIME", l[l.ENTER = 1] = "ENTER", l))(q || {});
+function V(l, E, r = {
   observeInterval: 30,
   debug: !1,
   realtime: !0,
   enter: !1,
   clearOnInputEmpty: !1,
-  captureablePatterns: I.HIRAGANA
+  captureablePatterns: _.HIRAGANA
 }) {
-  const L = C(
-    a.captureablePatterns ?? I.HIRAGANA
-  );
-  let d = 0;
-  function R() {
-    const e = a.realtime && (a.realtime === !0 || a.realtime instanceof HTMLInputElement && a.realtime.checked), r = a.enter && (a.enter === !0 || a.enter instanceof HTMLInputElement && a.enter.checked);
-    d = e || !r ? 0 : 1;
+  const R = C(
+    r.captureablePatterns ?? _.HIRAGANA
+  ), a = typeof l == "string" ? document.querySelector(l) : l;
+  if (!a)
+    throw new Error("input element not found");
+  let v = 0;
+  function H() {
+    const e = r.realtime && (r.realtime === !0 || r.realtime instanceof HTMLInputElement && r.realtime.checked), n = r.enter && (r.enter === !0 || r.enter instanceof HTMLInputElement && r.enter.checked);
+    v = e || !n ? 0 : 1;
   }
-  const l = [];
-  if (typeof m == "string") {
-    const e = document.querySelectorAll(m);
-    for (const r of e)
-      l.push({ element: r, type: g.Hiragana });
-  } else
-    for (const e of m)
-      if (typeof e == "string") {
-        const r = document.querySelectorAll(e);
-        for (const v of r)
-          l.push({ element: v, type: g.Hiragana });
-      } else
-        l.push({
-          element: e.element,
-          type: e.type ?? g.Hiragana
-        });
-  let f = !1, u = "", i = "", s = "";
-  const c = new Array(l.length).fill("");
-  function h() {
-    n("reset"), u = "", i = "", s = "";
-    for (let e = 0; e < l.length; e++)
+  const f = [], A = (e) => {
+    if (typeof e == "string") {
+      const n = document.querySelectorAll(e);
+      for (const m of n)
+        f.push({ element: m, type: g.Hiragana });
+    } else e instanceof HTMLInputElement ? f.push({ element: e, type: g.Hiragana }) : f.push({
+      element: e.element,
+      type: e.type ?? g.Hiragana
+    });
+  };
+  if (Array.isArray(E))
+    for (const e of E)
+      A(e);
+  else
+    A(E);
+  let u = !1, o = "", d = "", s = "";
+  const c = new Array(f.length).fill("");
+  function I() {
+    t("reset"), o = "", d = "", s = "";
+    for (let e = 0; e < f.length; e++)
       c[e] = "";
   }
-  function E() {
-    u = t.value, l.forEach(({ element: e }, r) => {
-      c[r] = e.value;
-    }), n("setup", t.value, { defaultString: u, activeOutputs: l });
+  function p() {
+    o = a.value, f.forEach(({ element: e }, n) => {
+      c[n] = e.value;
+    }), t("setup", a.value, { defaultString: o, activeOutputs: f });
   }
-  let o;
-  function _() {
-    n("start", { timer: o }), !o && (o = setInterval(() => {
-      R(), H();
-    }, a.observeInterval ?? 30));
+  let i;
+  function T() {
+    t("start", { timer: i }), !i && (i = setInterval(() => {
+      H(), w();
+    }, r.observeInterval ?? 30));
   }
   function k() {
-    n("end", { timer: o }), o && (clearInterval(o), o = void 0);
+    t("end", { timer: i }), i && (clearInterval(i), i = void 0);
   }
-  function H() {
-    let e = t.value;
-    n("observe", { observing: f, inputString: e, defaultString: u, currentString: i, outputValues: c }), !(e === "" || (e = S(u, e).diff, i === e)) && (i = e, f && b(i));
+  function w() {
+    let e = a.value;
+    t("observe", { observing: u, inputString: e, defaultString: o, currentString: d, outputValues: c }), !(e === "" || (e = S(o, e).diff, d === e)) && (d = e, u && b(d));
   }
   function b(e) {
-    n("set", { defaultString: u, string: e, inputValue: s, outputValues: c });
-    const r = M({
+    t("set", { defaultString: o, string: e, inputValue: s, outputValues: c });
+    const n = N({
       input: e,
-      patterns: L
+      patterns: R
     });
-    r.length === e.length && (s = r), l.forEach(({ element: v, type: A }, p) => {
-      const y = N(A, s);
-      n("converted", { type: A, string: e, inputValue: s, after: y, before: c[p] }), d === 0 ? v.value = c[p] + y : d === 1 && (v.dataset.kana = c[p] = y);
+    n.length === e.length && (s = n), f.forEach(({ element: m, type: L }, y) => {
+      const h = P(L, s);
+      t("converted", { type: L, string: e, inputValue: s, after: h, before: c[y] }), v === 0 ? m.value = c[y] + h : v === 1 && (m.dataset.kana = c[y] = h);
     });
   }
-  function T() {
-    l.forEach(({ element: e }) => {
+  function M() {
+    f.forEach(({ element: e }) => {
       e.dataset.kana && (e.value += e.dataset.kana, e.removeAttribute("data-kana"));
     });
   }
-  function n(e, ...r) {
-    if (a.debug) {
-      if (r.length === 0) {
+  function t(e, ...n) {
+    if (r.debug) {
+      if (n.length === 0) {
         console.info("debug", { message: e });
         return;
       }
-      console.info("debug", { message: e }, ...r);
+      console.info("debug", { message: e }, ...n);
     }
   }
-  t.addEventListener("focus", () => {
-    n("focus"), E();
-  }), t.addEventListener("blur", () => {
-    n("blur"), k();
-  }), t.addEventListener("compositionstart", (e) => {
-    n("compositionstart", { e }), E(), _(), f = !0;
-  }), t.addEventListener("compositionend", (e) => {
-    n("compositionend", { e }), k(), b(s), h(), f = !1;
-  }), t.addEventListener("keydown", (e) => {
-    n("keydown", { observing: f, e }), f || E(), e.code === "Enter" && (a.clearOnInputEmpty && t.value === "" ? (h(), b("")) : d === 1 && T());
-  }), t.addEventListener("keyup", (e) => {
-    n("keyup", { observing: f, e });
+  a.addEventListener("focus", () => {
+    t("focus"), p();
+  }), a.addEventListener("blur", () => {
+    t("blur"), k();
+  }), a.addEventListener("compositionstart", (e) => {
+    t("compositionstart", { e }), p(), T(), u = !0;
+  }), a.addEventListener("compositionend", (e) => {
+    t("compositionend", { e }), k(), b(s), I(), u = !1;
+  }), a.addEventListener("keydown", (e) => {
+    t("keydown", { observing: u, e }), u || p(), e.code === "Enter" && (r.clearOnInputEmpty && a.value === "" ? (I(), b("")) : v === 1 && M());
+  }), a.addEventListener("keyup", (e) => {
+    t("keyup", { observing: u, e });
   });
 }
 export {
-  I as CaptureableCharacterType,
+  _ as CaptureableCharacterType,
   g as KanaType,
-  w as OutputTiming,
-  G as setupObserver
+  q as OutputTiming,
+  V as setupObserver
 };
 //# sourceMappingURL=observer.mjs.map

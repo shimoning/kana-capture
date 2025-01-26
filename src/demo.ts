@@ -1,7 +1,8 @@
 import { setupObserver, KanaType, CaptureableCharacterType } from './observer.ts'
 
-const input = document.querySelector<HTMLInputElement>('#input')!
-
+const outputHiragana = document.querySelector<HTMLInputElement>(
+  '#output-hiragana1',
+)!
 const outputZenkakuKatakana = document.querySelector<HTMLInputElement>(
   '#output-zenkaku-katakana',
 )!
@@ -14,9 +15,11 @@ const timingRealtime =
 const timingEnter = document.querySelector<HTMLInputElement>('#timing-enter')!
 
 setupObserver(
-  input,
+  '#input',
   [
-    '#output-hiragana',
+    outputHiragana,
+    '#output-hiragana2',
+    '.output-hiragana',
     { element: outputZenkakuKatakana, type: KanaType.ZenkakuKatakana },
     { element: outputHankakuKatakana, type: KanaType.HankakuKatakana },
   ],

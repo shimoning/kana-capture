@@ -12,6 +12,9 @@ export type Options = {
   clearOnInputEmpty?: boolean;
   captureablePatterns?: CaptureableCharacterPattern | CaptureableCharacterPattern[];
 };
+
+// TODO: support other elements (e.g. HTMLDivElement, HTMLSpanElement, HTMLTextAreaElement)
+export type OutputElement = Output | HTMLInputElement | string;
 export type Output = {
   element: HTMLInputElement;
   type?: KanaType;
@@ -22,8 +25,8 @@ export enum OutputTiming {
 }
 
 export function setupObserver(
-  input: HTMLInputElement,
-  outputs: (Output | string)[] | string,
+  input: HTMLInputElement | string, // TODO: support textarea (HTMLTextAreaElement)
+  outputs: OutputElement | OutputElement[],
   options: Options = {
     observeInterval: 30,
     debug: false,
@@ -33,10 +36,20 @@ export function setupObserver(
     captureablePatterns: CaptureableCharacterType.HIRAGANA,
   },
 ) {
+  // 入力値を受け付けるパターン
   const captureablePatterns = generateCaptureableRegExp(
     options.captureablePatterns ?? CaptureableCharacterType.HIRAGANA,
   )
 
+  // 入力元を整える
+  const inputElement = typeof input === 'string'
+    ? document.querySelector<HTMLInputElement>(input)
+    : input
+  if (!inputElement) {
+    throw new Error('input element not found')
+  }
+
+  // 出力のタイミング
   let outputTiming = OutputTiming.REALTIME
   function _checkOutputTiming() {
     const realtime =
@@ -54,27 +67,30 @@ export function setupObserver(
 
   // 出力先を整える
   const activeOutputs: Required<Output>[] = []
-  if (typeof outputs === 'string') {
-    const elements = document.querySelectorAll<HTMLInputElement>(outputs)
-    for (const element of elements) {
-      activeOutputs.push({ element, type: KanaType.Hiragana })
-    }
-  } else {
-    for (const output of outputs) {
-      if (typeof output === 'string') {
-        const elements = document.querySelectorAll<HTMLInputElement>(output)
-        for (const element of elements) {
-          activeOutputs.push({ element, type: KanaType.Hiragana })
-        }
-      } else {
-        activeOutputs.push({
-          element: output.element,
-          type: output.type ?? KanaType.Hiragana,
-        })
+  const _outputParser = (output: OutputElement): void => {
+    if (typeof output === 'string') {
+      const elements = document.querySelectorAll<HTMLInputElement>(output)
+      for (const element of elements) {
+        activeOutputs.push({ element, type: KanaType.Hiragana })
       }
+    } else if (output instanceof HTMLInputElement) {
+      activeOutputs.push({ element: output, type: KanaType.Hiragana })
+    } else {
+      activeOutputs.push({
+        element: output.element,
+        type: output.type ?? KanaType.Hiragana,
+      })
     }
   }
+  if (Array.isArray(outputs)) {
+    for (const output of outputs) {
+      _outputParser(output)
+    }
+  } else {
+    _outputParser(outputs)
+  }
 
+  // 状態管理
   let observing: boolean = false
   let defaultString: string = ''
   let currentString: string = ''
@@ -100,11 +116,11 @@ export function setupObserver(
    * @returns void
    */
   function _setup() {
-    defaultString = input.value
+    defaultString = inputElement!.value
     activeOutputs.forEach(({ element }, index) => {
       outputValues[index] = element.value
     })
-    _debug('setup', input.value, { defaultString, activeOutputs })
+    _debug('setup', inputElement!.value, { defaultString, activeOutputs })
   }
 
   let timer: number | undefined
@@ -139,7 +155,7 @@ export function setupObserver(
    * @return void
    */
   function _observe() {
-    let inputString = input.value
+    let inputString = inputElement!.value
     _debug('observe', { observing, inputString, defaultString, currentString, outputValues })
 
     // 空文字の場合は何もしない
@@ -225,35 +241,35 @@ export function setupObserver(
   /**
    * Event listeners
    */
-  input.addEventListener('focus', () => {
+  inputElement.addEventListener('focus', () => {
     _debug('focus')
     _setup()
   })
-  input.addEventListener('blur', () => {
+  inputElement.addEventListener('blur', () => {
     _debug('blur')
     _end()
   })
-  input.addEventListener('compositionstart', (e: CompositionEvent) => {
+  inputElement.addEventListener('compositionstart', (e: CompositionEvent) => {
     _debug('compositionstart', { e })
     _setup()
     _start()
     observing = true
   })
-  input.addEventListener('compositionend', (e: CompositionEvent) => {
+  inputElement.addEventListener('compositionend', (e: CompositionEvent) => {
     _debug('compositionend', { e })
     _end()
     _set(inputValue)
     _reset()
     observing = false
   })
-  input.addEventListener('keydown', (e: KeyboardEvent) => {
+  inputElement.addEventListener('keydown', (e: KeyboardEvent) => {
     _debug('keydown', { observing, e })
     if (!observing) {
       _setup()
     }
 
     if (e.code === 'Enter') {
-      if (options.clearOnInputEmpty && input.value === '') {
+      if (options.clearOnInputEmpty && inputElement.value === '') {
         _reset()
         _set('')
       } else {
@@ -263,7 +279,7 @@ export function setupObserver(
       }
     }
   })
-  input.addEventListener('keyup', (e: Event) => {
+  inputElement.addEventListener('keyup', (e: Event) => {
     _debug('keyup', { observing, e })
   })
 }
