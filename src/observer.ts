@@ -1,5 +1,5 @@
 import { diff } from './utilities/diff'
-import { CaptureableCharacterPattern, CaptureableCharacterType, extractor } from './utilities/extractor'
+import { CaptureableCharacterPattern, CaptureableCharacterType, extractor, generateCaptureableRegExp } from './utilities/extractor'
 import { kanaConverter, KanaType } from './utilities/kanaConverter'
 export { KanaType, CaptureableCharacterType }
 export type { CaptureableCharacterPattern }
@@ -33,6 +33,10 @@ export function setupObserver(
     captureablePatterns: CaptureableCharacterType.HIRAGANA,
   },
 ) {
+  const captureablePatterns = generateCaptureableRegExp(
+    options.captureablePatterns ?? CaptureableCharacterType.HIRAGANA,
+  )
+
   let outputMode = OutputMode.REALTIME
   function _checkOutputMode() {
     const realtime =
@@ -170,7 +174,7 @@ export function setupObserver(
     _debug('set', { defaultString, string, inputValue, outputValues })
     const extracted = extractor({
       input: string,
-      patterns: options.captureablePatterns ?? CaptureableCharacterType.HIRAGANA,
+      patterns: captureablePatterns,
     })
     if (extracted.length === string.length) {
       inputValue = extracted
