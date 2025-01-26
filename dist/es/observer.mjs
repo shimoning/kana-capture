@@ -1,7 +1,7 @@
 import { diff as S } from "./utilities/diff.mjs";
-import { generateCaptureableRegExp as C, CaptureableCharacterType as I, extractor as N } from "./utilities/extractor.mjs";
-import { KanaType as y, kanaConverter as w } from "./utilities/kanaConverter.mjs";
-var M = /* @__PURE__ */ ((t) => (t[t.REALTIME = 0] = "REALTIME", t[t.ENTER = 1] = "ENTER", t))(M || {});
+import { generateCaptureableRegExp as C, CaptureableCharacterType as I, extractor as M } from "./utilities/extractor.mjs";
+import { KanaType as g, kanaConverter as N } from "./utilities/kanaConverter.mjs";
+var w = /* @__PURE__ */ ((t) => (t[t.REALTIME = 0] = "REALTIME", t[t.ENTER = 1] = "ENTER", t))(w || {});
 function G(t, m, a = {
   observeInterval: 30,
   debug: !1,
@@ -22,17 +22,17 @@ function G(t, m, a = {
   if (typeof m == "string") {
     const e = document.querySelectorAll(m);
     for (const r of e)
-      l.push({ element: r, type: y.Hiragana });
+      l.push({ element: r, type: g.Hiragana });
   } else
     for (const e of m)
       if (typeof e == "string") {
         const r = document.querySelectorAll(e);
         for (const v of r)
-          l.push({ element: v, type: y.Hiragana });
+          l.push({ element: v, type: g.Hiragana });
       } else
         l.push({
           element: e.element,
-          type: e.type ?? y.Hiragana
+          type: e.type ?? g.Hiragana
         });
   let f = !1, u = "", i = "", s = "";
   const c = new Array(l.length).fill("");
@@ -49,28 +49,28 @@ function G(t, m, a = {
   let o;
   function _() {
     n("start", { timer: o }), !o && (o = setInterval(() => {
-      R(), T();
+      R(), H();
     }, a.observeInterval ?? 30));
   }
   function k() {
     n("end", { timer: o }), o && (clearInterval(o), o = void 0);
   }
-  function T() {
+  function H() {
     let e = t.value;
     n("observe", { compositing: f, inputString: e, defaultString: u, currentString: i, outputValues: c }), !(e === "" || (e = S(u, e).diff, i === e)) && (i = e, f && p(i));
   }
   function p(e) {
     n("set", { defaultString: u, string: e, inputValue: s, outputValues: c });
-    const r = N({
+    const r = M({
       input: e,
       patterns: L
     });
     r.length === e.length && (s = r), l.forEach(({ element: v, type: A }, b) => {
-      const g = w(A, s);
-      n("converted", { type: A, string: e, inputValue: s, after: g, before: c[b] }), d === 0 ? v.value = c[b] + g : d === 1 && (v.dataset.kana = c[b] = g);
+      const y = N(A, s);
+      n("converted", { type: A, string: e, inputValue: s, after: y, before: c[b] }), d === 0 ? v.value = c[b] + y : d === 1 && (v.dataset.kana = c[b] = y);
     });
   }
-  function H() {
+  function T() {
     l.forEach(({ element: e }) => {
       e.dataset.kana && (e.value += e.dataset.kana, e.removeAttribute("data-kana"));
     });
@@ -93,15 +93,15 @@ function G(t, m, a = {
   }), t.addEventListener("compositionend", (e) => {
     n("compositionend", { e }), k(), p(s), h(), f = !1;
   }), t.addEventListener("keydown", (e) => {
-    n("keydown", { compositing: f, e }), f || E(), e.code === "Enter" && (a.clearOnInputEmpty && t.value === "" ? (h(), p("")) : d === 1 && H());
+    n("keydown", { compositing: f, e }), f || E(), e.code === "Enter" && (a.clearOnInputEmpty && t.value === "" ? (h(), p("")) : d === 1 && T());
   }), t.addEventListener("keyup", (e) => {
     n("keyup", { compositing: f, e });
   });
 }
 export {
   I as CaptureableCharacterType,
-  y as KanaType,
-  M as OutputMode,
+  g as KanaType,
+  w as OutputTiming,
   G as setupObserver
 };
 //# sourceMappingURL=observer.mjs.map

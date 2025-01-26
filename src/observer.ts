@@ -16,7 +16,7 @@ export type Output = {
   element: HTMLInputElement;
   type?: KanaType;
 };
-export enum OutputMode {
+export enum OutputTiming {
   REALTIME, // default and priority
   ENTER,
 }
@@ -37,8 +37,8 @@ export function setupObserver(
     options.captureablePatterns ?? CaptureableCharacterType.HIRAGANA,
   )
 
-  let outputMode = OutputMode.REALTIME
-  function _checkOutputMode() {
+  let outputTiming = OutputTiming.REALTIME
+  function _checkOutputTiming() {
     const realtime =
       options.realtime &&
       (options.realtime === true ||
@@ -47,9 +47,9 @@ export function setupObserver(
       options.enter &&
       (options.enter === true ||
         (options.enter instanceof HTMLInputElement && options.enter.checked))
-    outputMode = realtime || !enter
-      ? OutputMode.REALTIME // realtime=true, realtime=false & enter=false
-      : OutputMode.ENTER  // realtime=false & enter=true
+    outputTiming = realtime || !enter
+      ? OutputTiming.REALTIME // realtime=true, realtime=false & enter=false
+      : OutputTiming.ENTER  // realtime=false & enter=true
   }
 
   // 出力先を整える
@@ -118,7 +118,7 @@ export function setupObserver(
       return
     }
     timer = setInterval(() => {
-      _checkOutputMode()
+      _checkOutputTiming()
       _observe()
     }, options.observeInterval ?? 30)
   }
@@ -183,9 +183,9 @@ export function setupObserver(
     activeOutputs.forEach(({ element, type }, index) => {
       const converted = kanaConverter(type, inputValue)
       _debug('converted', { type, string, inputValue, after: converted, before: outputValues[index] })
-      if (outputMode === OutputMode.REALTIME) {
+      if (outputTiming === OutputTiming.REALTIME) {
         element.value = outputValues[index] + converted
-      } else if (outputMode === OutputMode.ENTER) {
+      } else if (outputTiming === OutputTiming.ENTER) {
         element.dataset['kana'] = outputValues[index] = converted
       }
     })
@@ -257,7 +257,7 @@ export function setupObserver(
         _reset()
         _set('')
       } else {
-        if (outputMode === OutputMode.ENTER) {
+        if (outputTiming === OutputTiming.ENTER) {
           _reflect()
         }
       }
