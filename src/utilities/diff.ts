@@ -13,7 +13,7 @@ export function diff(
   beforeString: string,
   afterString: string,
 ): DiffResult {
-  if (!beforeString.length) {
+  if (!beforeString.length || !afterString.length) {
     return {
       before: beforeString,
       after: afterString,

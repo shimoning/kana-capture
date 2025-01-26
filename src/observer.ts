@@ -143,7 +143,6 @@ export function setupObserver(
       return
     }
 
-
     // すでに入力されている文字を取り除く
     const diffResult = diff(defaultString, inputString)
     inputString = diffResult.diff
@@ -173,7 +172,6 @@ export function setupObserver(
       input: string,
       patterns: options.captureablePatterns ?? CaptureableCharacterType.HIRAGANA,
     })
-    console.warn({ extracted, string, inputValue, defaultString })
     if (extracted.length === string.length) {
       inputValue = extracted
     }
@@ -221,7 +219,7 @@ export function setupObserver(
   }
 
   /**
-   * event listeners
+   * Event listeners
    */
   input.addEventListener('focus', () => {
     _debug('focus')
