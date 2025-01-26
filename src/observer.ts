@@ -75,7 +75,7 @@ export function setupObserver(
     }
   }
 
-  let compositing: boolean = false
+  let observing: boolean = false
   let defaultString: string = ''
   let currentString: string = ''
 
@@ -140,7 +140,7 @@ export function setupObserver(
    */
   function _observe() {
     let inputString = input.value
-    _debug('observe', { compositing, inputString, defaultString, currentString, outputValues })
+    _debug('observe', { observing, inputString, defaultString, currentString, outputValues })
 
     // 空文字の場合は何もしない
     if (inputString === '') {
@@ -158,7 +158,7 @@ export function setupObserver(
     currentString = inputString
 
     // 変換完了している場合は何もしない
-    if (!compositing) {
+    if (!observing) {
       return
     }
 
@@ -237,18 +237,18 @@ export function setupObserver(
     _debug('compositionstart', { e })
     _setup()
     _start()
-    compositing = true
+    observing = true
   })
   input.addEventListener('compositionend', (e: CompositionEvent) => {
     _debug('compositionend', { e })
     _end()
     _set(inputValue)
     _reset()
-    compositing = false
+    observing = false
   })
   input.addEventListener('keydown', (e: KeyboardEvent) => {
-    _debug('keydown', { compositing, e })
-    if (!compositing) {
+    _debug('keydown', { observing, e })
+    if (!observing) {
       _setup()
     }
 
@@ -264,6 +264,6 @@ export function setupObserver(
     }
   })
   input.addEventListener('keyup', (e: Event) => {
-    _debug('keyup', { compositing, e })
+    _debug('keyup', { observing, e })
   })
 }

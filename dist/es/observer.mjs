@@ -57,17 +57,17 @@ function G(t, m, a = {
   }
   function H() {
     let e = t.value;
-    n("observe", { compositing: f, inputString: e, defaultString: u, currentString: i, outputValues: c }), !(e === "" || (e = S(u, e).diff, i === e)) && (i = e, f && p(i));
+    n("observe", { observing: f, inputString: e, defaultString: u, currentString: i, outputValues: c }), !(e === "" || (e = S(u, e).diff, i === e)) && (i = e, f && b(i));
   }
-  function p(e) {
+  function b(e) {
     n("set", { defaultString: u, string: e, inputValue: s, outputValues: c });
     const r = M({
       input: e,
       patterns: L
     });
-    r.length === e.length && (s = r), l.forEach(({ element: v, type: A }, b) => {
+    r.length === e.length && (s = r), l.forEach(({ element: v, type: A }, p) => {
       const y = N(A, s);
-      n("converted", { type: A, string: e, inputValue: s, after: y, before: c[b] }), d === 0 ? v.value = c[b] + y : d === 1 && (v.dataset.kana = c[b] = y);
+      n("converted", { type: A, string: e, inputValue: s, after: y, before: c[p] }), d === 0 ? v.value = c[p] + y : d === 1 && (v.dataset.kana = c[p] = y);
     });
   }
   function T() {
@@ -91,11 +91,11 @@ function G(t, m, a = {
   }), t.addEventListener("compositionstart", (e) => {
     n("compositionstart", { e }), E(), _(), f = !0;
   }), t.addEventListener("compositionend", (e) => {
-    n("compositionend", { e }), k(), p(s), h(), f = !1;
+    n("compositionend", { e }), k(), b(s), h(), f = !1;
   }), t.addEventListener("keydown", (e) => {
-    n("keydown", { compositing: f, e }), f || E(), e.code === "Enter" && (a.clearOnInputEmpty && t.value === "" ? (h(), p("")) : d === 1 && T());
+    n("keydown", { observing: f, e }), f || E(), e.code === "Enter" && (a.clearOnInputEmpty && t.value === "" ? (h(), b("")) : d === 1 && T());
   }), t.addEventListener("keyup", (e) => {
-    n("keyup", { compositing: f, e });
+    n("keyup", { observing: f, e });
   });
 }
 export {
