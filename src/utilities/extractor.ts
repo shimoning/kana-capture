@@ -30,7 +30,7 @@ export const CaptureableCharacterMap: Record<CaptureableCharacterType, RegExp> =
   [CaptureableCharacterType.HANKAKU_ALPHABET]: /[A-Za-z]/g,
   [CaptureableCharacterType.ZENKAKU_NUMBER]: /[０-９]/g,
   [CaptureableCharacterType.HANKAKU_NUMBER]: /[0-9]/g,
-  [CaptureableCharacterType.ZENKAKU_1BYTE_SYMBOL]: /[！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［￥］＾＿“｛｜｝～]/g,
+  [CaptureableCharacterType.ZENKAKU_1BYTE_SYMBOL]: /[！＂”＃＄％＆＇’（）＊＋，－．／：；＜＝＞？＠［￥］＾＿“｛｜｝～]/g,
   [CaptureableCharacterType.HANKAKU_1BYTE_SYMBOL]: /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/g,
 }
 

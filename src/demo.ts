@@ -34,6 +34,9 @@ setupObserver(
       CaptureableCharacterType.KUTOUTEN,
       CaptureableCharacterType.CHOUON,
       CaptureableCharacterType.KAGIKAKKO,
+      CaptureableCharacterType.ZENKAKU_ALPHABET,
+      CaptureableCharacterType.ZENKAKU_NUMBER,
+      CaptureableCharacterType.ZENKAKU_1BYTE_SYMBOL,
     ],
   },
 )
