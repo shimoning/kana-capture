@@ -37,6 +37,8 @@ setupObserver(
       CaptureableCharacterType.ZENKAKU_ALPHABET,
       CaptureableCharacterType.ZENKAKU_NUMBER,
       CaptureableCharacterType.ZENKAKU_1BYTE_SYMBOL,
+      CaptureableCharacterType.ZENKAKU_SPACE,
+      CaptureableCharacterType.HANKAKU_SPACE,
     ],
   },
 )

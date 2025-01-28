@@ -1,5 +1,10 @@
 import { diff } from './utilities/diff'
-import { CaptureableCharacterPattern, CaptureableCharacterType, extractor, generateCaptureableRegExp } from './utilities/extractor'
+import {
+  CaptureableCharacterPattern,
+  CaptureableCharacterType,
+  generateCaptureableRegExp,
+  extractor,
+} from './utilities/extractor'
 import { kanaConverter, KanaType } from './utilities/kanaConverter'
 export { KanaType, CaptureableCharacterType }
 export type { CaptureableCharacterPattern }
@@ -40,6 +45,10 @@ export function setupObserver(
   const captureablePatterns = generateCaptureableRegExp(
     options.captureablePatterns ?? CaptureableCharacterType.HIRAGANA,
   )
+
+  // スペースの扱い
+  const allowZenkakuSpace = captureablePatterns.source.includes('　')
+  const allowHankakuSpace = captureablePatterns.source.includes(' ')
 
   // 入力元を整える
   const inputElement = typeof input === 'string'
@@ -155,7 +164,7 @@ export function setupObserver(
    * @return void
    */
   function _observe() {
-    let inputString = inputElement!.value
+    const inputString = inputElement!.value
     _debug('observe', { observing, inputString, defaultString, currentString, outputValues })
 
     // 空文字の場合は何もしない
@@ -165,13 +174,12 @@ export function setupObserver(
 
     // すでに入力されている文字を取り除く
     const diffResult = diff(defaultString, inputString)
-    inputString = diffResult.diff
 
     // 同じだったら何もしない
-    if (currentString === inputString) {
+    if (currentString === diffResult.diff) {
       return
     }
-    currentString = inputString
+    currentString = diffResult.diff
 
     // 変換完了している場合は何もしない
     if (!observing) {
@@ -264,9 +272,9 @@ export function setupObserver(
   })
   inputElement.addEventListener('keydown', (e: KeyboardEvent) => {
     _debug('keydown', { observing, e })
-    if (!observing) {
-      _setup()
-    }
+  })
+  inputElement.addEventListener('keyup', (e: KeyboardEvent) => {
+    _debug('keyup', { observing, e })
 
     if (e.code === 'Enter') {
       if (options.clearOnInputEmpty && inputElement.value === '') {
@@ -277,9 +285,15 @@ export function setupObserver(
           _reflect()
         }
       }
+    } else if (!observing && e.code === 'Space') {
+      const candidate = inputElement.value.slice(-1)
+      if (allowZenkakuSpace && candidate === '　') {
+        _setup()
+        _set(candidate)
+      } else if (allowHankakuSpace && candidate === ' ') {
+        _setup()
+        _set(candidate)
+      }
     }
-  })
-  inputElement.addEventListener('keyup', (e: Event) => {
-    _debug('keyup', { observing, e })
   })
 }

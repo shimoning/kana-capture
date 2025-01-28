@@ -32,6 +32,7 @@ export const symbolMap: Record<string, string> = {
   '］': ']',
   '＾': '^',
   '＿': '_',
+  '｀': '`',
   '“': '`',
   '｛': '{',
   '｜': '|',
