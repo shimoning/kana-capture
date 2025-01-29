@@ -1,8 +1,8 @@
-import { diff as N } from "./utilities/diff.mjs";
-import { generateCaptureableRegExp as P, CaptureableCharacterType as H, extractor as q } from "./utilities/extractor.mjs";
-import { KanaType as g, kanaConverter as x } from "./utilities/kanaConverter.mjs";
-var G = /* @__PURE__ */ ((l) => (l[l.REALTIME = 0] = "REALTIME", l[l.ENTER = 1] = "ENTER", l))(G || {});
-function Z(l, b, r = {
+import { diff as C } from "./utilities/diff.mjs";
+import { generateCaptureableRegExp as N, CaptureableCharacterType as H, extractor as R } from "./utilities/extractor.mjs";
+import { KanaType as g, kanaConverter as P } from "./utilities/kanaConverter.mjs";
+var x = /* @__PURE__ */ ((l) => (l[l.REALTIME = 0] = "REALTIME", l[l.ENTER = 1] = "ENTER", l))(x || {});
+function V(l, E, r = {
   observeInterval: 30,
   debug: !1,
   realtime: !0,
@@ -10,9 +10,9 @@ function Z(l, b, r = {
   clearOnInputEmpty: !1,
   captureablePatterns: H.HIRAGANA
 }) {
-  const y = P(
+  const A = N(
     r.captureablePatterns ?? H.HIRAGANA
-  ), R = y.source.includes("　"), S = y.source.includes(" "), a = typeof l == "string" ? document.querySelector(l) : l;
+  ), a = typeof l == "string" ? document.querySelector(l) : l;
   if (!a)
     throw new Error("input element not found");
   let p = 0;
@@ -20,32 +20,32 @@ function Z(l, b, r = {
     const e = r.realtime && (r.realtime === !0 || r.realtime instanceof HTMLInputElement && r.realtime.checked), t = r.enter && (r.enter === !0 || r.enter instanceof HTMLInputElement && r.enter.checked);
     p = e || !t ? 0 : 1;
   }
-  const c = [], A = (e) => {
+  const f = [], I = (e) => {
     if (typeof e == "string") {
       const t = document.querySelectorAll(e);
-      for (const E of t)
-        c.push({ element: E, type: g.Hiragana });
-    } else e instanceof HTMLInputElement ? c.push({ element: e, type: g.Hiragana }) : c.push({
+      for (const d of t)
+        f.push({ element: d, type: g.Hiragana });
+    } else e instanceof HTMLInputElement ? f.push({ element: e, type: g.Hiragana }) : f.push({
       element: e.element,
       type: e.type ?? g.Hiragana
     });
   };
-  if (Array.isArray(b))
-    for (const e of b)
-      A(e);
+  if (Array.isArray(E))
+    for (const e of E)
+      I(e);
   else
-    A(b);
-  let f = !1, i = "", d = "", s = "";
-  const o = new Array(c.length).fill("");
-  function I() {
-    n("reset"), i = "", d = "", s = "";
-    for (let e = 0; e < c.length; e++)
-      o[e] = "";
+    I(E);
+  let c = !1, o = "", v = "", s = "";
+  const i = new Array(f.length).fill("");
+  function k() {
+    n("reset"), o = "", v = "", s = "";
+    for (let e = 0; e < f.length; e++)
+      i[e] = "";
   }
-  function m() {
-    i = a.value, c.forEach(({ element: e }, t) => {
-      o[t] = e.value;
-    }), n("setup", a.value, { defaultString: i, activeOutputs: c });
+  function b() {
+    o = a.value, f.forEach(({ element: e }, t) => {
+      i[t] = e.value;
+    }), n("setup", a.value, { defaultString: o, activeOutputs: f });
   }
   let u;
   function w() {
@@ -58,24 +58,24 @@ function Z(l, b, r = {
   }
   function M() {
     const e = a.value;
-    if (n("observe", { observing: f, inputString: e, defaultString: i, currentString: d, outputValues: o }), e === "")
+    if (n("observe", { observing: c, inputString: e, defaultString: o, currentString: v, outputValues: i }), e === "")
       return;
-    const t = N(i, e);
-    d !== t.diff && (d = t.diff, f && v(d));
+    const t = C(o, e);
+    v !== t.diff && (v = t.diff, c && m(v));
   }
-  function v(e) {
-    n("set", { defaultString: i, string: e, inputValue: s, outputValues: o });
-    const t = q({
+  function m(e) {
+    n("set", { defaultString: o, string: e, inputValue: s, outputValues: i });
+    const t = R({
       input: e,
-      patterns: y
+      patterns: A
     });
-    t.length === e.length && (s = t), c.forEach(({ element: E, type: _ }, h) => {
-      const k = x(_, s);
-      n("converted", { type: _, string: e, inputValue: s, after: k, before: o[h] }), p === 0 ? E.value = o[h] + k : p === 1 && (E.dataset.kana = o[h] = k);
+    t.length === e.length && (s = t), f.forEach(({ element: d, type: _ }, y) => {
+      const h = P(_, s);
+      n("converted", { type: _, string: e, inputValue: s, after: h, before: i[y] }), p === 0 ? d.value = i[y] + h : p === 1 && (d.dataset.kana = i[y] = h);
     });
   }
-  function C() {
-    c.forEach(({ element: e }) => {
+  function S() {
+    f.forEach(({ element: e }) => {
       e.dataset.kana && (e.value += e.dataset.kana, e.removeAttribute("data-kana"));
     });
   }
@@ -89,28 +89,31 @@ function Z(l, b, r = {
     }
   }
   a.addEventListener("focus", () => {
-    n("focus"), m();
+    n("focus"), b();
   }), a.addEventListener("blur", () => {
     n("blur"), L();
   }), a.addEventListener("compositionstart", (e) => {
-    n("compositionstart", { e }), m(), w(), f = !0;
+    n("compositionstart", { e }), b(), w(), c = !0;
   }), a.addEventListener("compositionend", (e) => {
-    n("compositionend", { e }), L(), v(s), I(), f = !1;
+    n("compositionend", { e }), L(), m(s), k(), c = !1;
   }), a.addEventListener("keydown", (e) => {
-    n("keydown", { observing: f, e });
+    n("keydown", { observing: c, e });
   }), a.addEventListener("keyup", (e) => {
-    if (n("keyup", { observing: f, e }), e.code === "Enter")
-      r.clearOnInputEmpty && a.value === "" ? (I(), v("")) : p === 1 && C();
-    else if (!f && e.code === "Space") {
-      const t = a.value.slice(-1);
-      (R && t === "　" || S && t === " ") && (m(), v(t));
+    if (n("keyup", { observing: c, e }), e.code === "Enter")
+      r.clearOnInputEmpty && a.value === "" ? (k(), m("")) : p === 1 && S();
+    else if (!c) {
+      const t = a.value.slice(-1), d = R({
+        input: t,
+        patterns: A
+      });
+      t === d && (b(), m(t));
     }
   });
 }
 export {
   H as CaptureableCharacterType,
   g as KanaType,
-  G as OutputTiming,
-  Z as setupObserver
+  x as OutputTiming,
+  V as setupObserver
 };
 //# sourceMappingURL=observer.mjs.map

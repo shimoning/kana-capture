@@ -46,10 +46,6 @@ export function setupObserver(
     options.captureablePatterns ?? CaptureableCharacterType.HIRAGANA,
   )
 
-  // スペースの扱い
-  const allowZenkakuSpace = captureablePatterns.source.includes('　')
-  const allowHankakuSpace = captureablePatterns.source.includes(' ')
-
   // 入力元を整える
   const inputElement = typeof input === 'string'
     ? document.querySelector<HTMLInputElement>(input)
@@ -285,12 +281,13 @@ export function setupObserver(
           _reflect()
         }
       }
-    } else if (!observing && e.code === 'Space') {
+    } else if (!observing) {
       const candidate = inputElement.value.slice(-1)
-      if (allowZenkakuSpace && candidate === '　') {
-        _setup()
-        _set(candidate)
-      } else if (allowHankakuSpace && candidate === ' ') {
+      const extracted = extractor({
+        input: candidate,
+        patterns: captureablePatterns,
+      })
+      if (candidate === extracted) {
         _setup()
         _set(candidate)
       }
