@@ -1,8 +1,8 @@
-import { diff as C } from "./utilities/diff.mjs";
-import { generateCaptureableRegExp as N, CaptureableCharacterType as H, extractor as R } from "./utilities/extractor.mjs";
-import { KanaType as g, kanaConverter as P } from "./utilities/kanaConverter.mjs";
-var x = /* @__PURE__ */ ((l) => (l[l.REALTIME = 0] = "REALTIME", l[l.ENTER = 1] = "ENTER", l))(x || {});
-function V(l, E, r = {
+import { diff as N } from "./utilities/diff.mjs";
+import { generateCaptureableRegExp as P, CaptureableCharacterType as H, extractor as R } from "./utilities/extractor.mjs";
+import { KanaType as y, kanaConverter as w } from "./utilities/kanaConverter.mjs";
+var x = /* @__PURE__ */ ((f) => (f[f.REALTIME = 0] = "REALTIME", f[f.ENTER = 1] = "ENTER", f))(x || {});
+function V(f, E, r = {
   observeInterval: 30,
   debug: !1,
   realtime: !0,
@@ -10,24 +10,24 @@ function V(l, E, r = {
   clearOnInputEmpty: !1,
   captureablePatterns: H.HIRAGANA
 }) {
-  const A = N(
+  const A = P(
     r.captureablePatterns ?? H.HIRAGANA
-  ), a = typeof l == "string" ? document.querySelector(l) : l;
+  ), a = typeof f == "string" ? document.querySelector(f) : f;
   if (!a)
     throw new Error("input element not found");
-  let p = 0;
+  let v = 0;
   function T() {
     const e = r.realtime && (r.realtime === !0 || r.realtime instanceof HTMLInputElement && r.realtime.checked), t = r.enter && (r.enter === !0 || r.enter instanceof HTMLInputElement && r.enter.checked);
-    p = e || !t ? 0 : 1;
+    v = e || !t ? 0 : 1;
   }
-  const f = [], I = (e) => {
+  const i = [], I = (e) => {
     if (typeof e == "string") {
       const t = document.querySelectorAll(e);
       for (const d of t)
-        f.push({ element: d, type: g.Hiragana });
-    } else e instanceof HTMLInputElement ? f.push({ element: e, type: g.Hiragana }) : f.push({
+        i.push({ element: d, type: y.Hiragana });
+    } else e instanceof HTMLInputElement ? i.push({ element: e, type: y.Hiragana }) : i.push({
       element: e.element,
-      type: e.type ?? g.Hiragana
+      type: e.type ?? y.Hiragana
     });
   };
   if (Array.isArray(E))
@@ -35,47 +35,47 @@ function V(l, E, r = {
       I(e);
   else
     I(E);
-  let c = !1, o = "", v = "", s = "";
-  const i = new Array(f.length).fill("");
-  function k() {
-    n("reset"), o = "", v = "", s = "";
-    for (let e = 0; e < f.length; e++)
-      i[e] = "";
+  let l = !1, u = "", p = "", s = "";
+  const c = new Array(i.length).fill("");
+  function L() {
+    n("reset"), u = "", p = "", s = "";
+    for (let e = 0; e < i.length; e++)
+      c[e] = "";
   }
   function b() {
-    o = a.value, f.forEach(({ element: e }, t) => {
-      i[t] = e.value;
-    }), n("setup", a.value, { defaultString: o, activeOutputs: f });
+    u = a.value, i.forEach(({ element: e }, t) => {
+      c[t] = e.value;
+    }), n("setup", a.value, { defaultString: u, activeOutputs: i });
   }
-  let u;
-  function w() {
-    n("start", { timer: u }), !u && (u = setInterval(() => {
+  let o;
+  function C() {
+    n("start", { timer: o }), !o && (o = setInterval(() => {
       T(), M();
     }, r.observeInterval ?? 30));
   }
-  function L() {
-    n("end", { timer: u }), u && (clearInterval(u), u = void 0);
+  function k() {
+    n("end", { timer: o }), o && (clearInterval(o), o = void 0);
   }
   function M() {
     const e = a.value;
-    if (n("observe", { observing: c, inputString: e, defaultString: o, currentString: v, outputValues: i }), e === "")
+    if (n("observe", { observing: l, inputString: e, defaultString: u, currentString: p, outputValues: c }), e === "")
       return;
-    const t = C(o, e);
-    v !== t.diff && (v = t.diff, c && m(v));
+    const t = N(u, e);
+    p !== t.diff && (p = t.diff, l && m(p));
   }
   function m(e) {
-    n("set", { defaultString: o, string: e, inputValue: s, outputValues: i });
+    n("set", { defaultString: u, string: e, inputValue: s, outputValues: c });
     const t = R({
       input: e,
       patterns: A
     });
-    t.length === e.length && (s = t), f.forEach(({ element: d, type: _ }, y) => {
-      const h = P(_, s);
-      n("converted", { type: _, string: e, inputValue: s, after: h, before: i[y] }), p === 0 ? d.value = i[y] + h : p === 1 && (d.dataset.kana = i[y] = h);
+    t.length === e.length && (s = t), i.forEach(({ element: d, type: _ }, g) => {
+      const h = w(_, s);
+      n("converted", { type: _, string: e, inputValue: s, after: h, before: c[g] }), v === 0 ? d.value = c[g] + h : v === 1 && (d.dataset.kana = c[g] = h);
     });
   }
   function S() {
-    f.forEach(({ element: e }) => {
+    i.forEach(({ element: e }) => {
       e.dataset.kana && (e.value += e.dataset.kana, e.removeAttribute("data-kana"));
     });
   }
@@ -91,28 +91,26 @@ function V(l, E, r = {
   a.addEventListener("focus", () => {
     n("focus"), b();
   }), a.addEventListener("blur", () => {
-    n("blur"), L();
+    n("blur"), k();
   }), a.addEventListener("compositionstart", (e) => {
-    n("compositionstart", { e }), b(), w(), c = !0;
+    n("compositionstart", { e }), b(), C(), l = !0;
   }), a.addEventListener("compositionend", (e) => {
-    n("compositionend", { e }), L(), m(s), k(), c = !1;
-  }), a.addEventListener("keydown", (e) => {
-    n("keydown", { observing: c, e });
-  }), a.addEventListener("keyup", (e) => {
-    if (n("keyup", { observing: c, e }), e.code === "Enter")
-      r.clearOnInputEmpty && a.value === "" ? (k(), m("")) : p === 1 && S();
-    else if (!c) {
-      const t = a.value.slice(-1), d = R({
+    n("compositionend", { e }), k(), m(s), L(), l = !1;
+  }), a.addEventListener("beforeinput", (e) => {
+    if (n("beforeinput", { observing: l, e }), !l && !e.isComposing && e.data) {
+      const t = e.data, d = R({
         input: t,
         patterns: A
       });
-      t === d && (b(), m(t));
+      t && t === d && (b(), m(t));
     }
+  }), a.addEventListener("keyup", (e) => {
+    n("keyup", { observing: l, e }), e.code === "Enter" && (r.clearOnInputEmpty && a.value === "" ? (L(), m("")) : v === 1 && S());
   });
 }
 export {
   H as CaptureableCharacterType,
-  g as KanaType,
+  y as KanaType,
   x as OutputTiming,
   V as setupObserver
 };

@@ -266,12 +266,22 @@ export function setupObserver(
     _reset()
     observing = false
   })
-  inputElement.addEventListener('keydown', (e: KeyboardEvent) => {
-    _debug('keydown', { observing, e })
+  inputElement.addEventListener('beforeinput', (e: InputEvent) => {
+    _debug('beforeinput', { observing, e })
+    if (!observing && !e.isComposing && e.data) {
+      const candidate = e.data
+      const extracted = extractor({
+        input: candidate,
+        patterns: captureablePatterns,
+      })
+      if (candidate && candidate === extracted) {
+        _setup()
+        _set(candidate)
+      }
+    }
   })
   inputElement.addEventListener('keyup', (e: KeyboardEvent) => {
     _debug('keyup', { observing, e })
-
     if (e.code === 'Enter') {
       if (options.clearOnInputEmpty && inputElement.value === '') {
         _reset()
@@ -280,16 +290,6 @@ export function setupObserver(
         if (outputTiming === OutputTiming.ENTER) {
           _reflect()
         }
-      }
-    } else if (!observing) {
-      const candidate = inputElement.value.slice(-1)
-      const extracted = extractor({
-        input: candidate,
-        patterns: captureablePatterns,
-      })
-      if (candidate === extracted) {
-        _setup()
-        _set(candidate)
       }
     }
   })
