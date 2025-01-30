@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   root: './',
   base: './',
-  publicDir: 'preview',
+  publicDir: 'docs',
   envDir: './',
   build: {
     outDir: 'dist',
@@ -18,9 +18,9 @@ export default defineConfig({
     },
     rollupOptions: {
       output: [
-        { format: 'cjs', preserveModules: true, exports: 'named', },
-        { format: 'es', preserveModules: true, exports: 'named', },
-        { format: 'umd', name: 'KanaCapture', },
+        { format: 'cjs', preserveModules: true, exports: 'named' },
+        { format: 'es', preserveModules: true, exports: 'named' },
+        { format: 'umd', name: 'KanaCapture' },
       ],
     },
   },

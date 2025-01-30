@@ -2,7 +2,7 @@
 .vscode/
 node_modules/
 src/
-preview/
+docs/
 test/
 .gitignore
 .node-version

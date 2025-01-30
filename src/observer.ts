@@ -128,7 +128,7 @@ export function setupObserver(
     _debug('setup', inputElement!.value, { defaultString, activeOutputs })
   }
 
-  let timer: number | undefined
+  let timer: ReturnType<typeof setInterval> | undefined
   /**
    * 監視を開始する
    * @returns void
