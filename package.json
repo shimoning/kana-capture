@@ -1,6 +1,6 @@
 {
-  "name": "kana-capturer",
-  "version": "0.0.9",
+  "name": "@shimoning/kana-capturer",
+  "version": "0.1.0",
   "description": "Kana Japanese characters capture and converter",
   "keywords": [
     "japanese",
@@ -22,6 +22,14 @@
   "bugs": {
     "url": "https://github.com/shimoning/kana-capturer/issues"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/shimoning"
+  },
+  "files": [
+    "dist/cjs",
+    "dist/esm",
+    "dist/umd"
+  ],
   "main": "src/observer.ts",
   "scripts": {
     "dev": "vite",
