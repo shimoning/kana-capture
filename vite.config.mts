@@ -1,10 +1,21 @@
 import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   root: './',
   base: './',
   publicDir: 'docs',
   envDir: './',
+  plugins: [
+    dts({
+      insertTypesEntry: true,
+      // include: 'src/**/*.ts',
+      exclude: [
+        'src/demo.ts',
+      ],
+      outDir: 'types',
+    }),
+  ],
   build: {
     outDir: 'dist',
     emptyOutDir: true,
@@ -12,15 +23,13 @@ export default defineConfig({
     minify: true,
     lib: {
       entry: ['src/observer.ts'],
-      formats: ['es', 'cjs', 'umd'],
-      fileName: '[format]/[name]',
       name: 'KanaCapture',
     },
     rollupOptions: {
       output: [
-        { format: 'cjs', preserveModules: true, exports: 'named' },
-        { format: 'es', preserveModules: true, exports: 'named' },
-        { format: 'umd', name: 'KanaCapture' },
+        { format: 'cjs', dir: 'dist/cjs', preserveModules: true, exports: 'named' },
+        { format: 'es', dir: 'dist/esm', preserveModules: true, exports: 'named' },
+        { format: 'umd', dir: 'dist/umd', name: 'KanaCapture' },
       ],
     },
   },

@@ -16,4 +16,11 @@ export default [
       semi: ['error', 'never'],
     },
   },
+  {
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'types/**',
+    ],
+  },
 ]

@@ -4,6 +4,12 @@ import * as path from 'path'
 const deletePaths = [
   'demo',
   'favicon.svg',
+  'cjs/demo',
+  'cjs/favicon.svg',
+  'esm/demo',
+  'esm/favicon.svg',
+  'umd/demo',
+  'umd/favicon.svg',
 ]
 const distDir = path.join(__dirname, '../dist')
 
