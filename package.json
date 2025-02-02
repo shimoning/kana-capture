@@ -1,5 +1,5 @@
 {
-  "name": "@shimoning/kana-capturer",
+  "name": "@shimoning/kana-capture",
   "version": "0.1.1",
   "description": "Kana Japanese characters capture and converter",
   "keywords": [
@@ -15,12 +15,12 @@
   "author": "Shimon Haga",
   "license": "MIT",
   "repository": {
-    "homepage": "https://github.com/shimoning/kana-capturer#readme",
+    "homepage": "https://github.com/shimoning/kana-capture#readme",
     "type": "git",
-    "url": "git+ssh://git@github.com/shimoning/kana-capturer.git"
+    "url": "git+ssh://git@github.com/shimoning/kana-capture.git"
   },
   "bugs": {
-    "url": "https://github.com/shimoning/kana-capturer/issues"
+    "url": "https://github.com/shimoning/kana-capture/issues"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/shimoning"
