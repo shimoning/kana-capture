@@ -15,27 +15,27 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Gets semantic release info
-        id: semantic_release_info
-        uses: jossef/action-semantic-release-info@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version-file: .node-version
           registry-url: https://npm.pkg.github.com/
 
       - name: Package install
         run: npm install --frozen-lockfile
 
-      - name: Update package.json version
-        uses: jossef/action-set-json-field@v1
-        with:
-          file: package.json
-          field: version
-          value: ${{ steps.semantic_release_info.outputs.git_tag }}
+      # - name: Gets semantic release info
+      #   id: semantic_release_info
+      #   uses: jossef/action-semantic-release-info@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ github.token }}
+
+      # - name: Update package.json version
+      #   uses: jossef/action-set-json-field@v1
+      #   with:
+      #     file: package.json
+      #     field: version
+      #     value: ${{ steps.semantic_release_info.outputs.git_tag }}
 
       - name: Publish package
         run: npm publish

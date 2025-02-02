@@ -17,7 +17,7 @@
   "repository": {
     "homepage": "https://github.com/shimoning/kana-capture#readme",
     "type": "git",
-    "url": "git+ssh://git@github.com/shimoning/kana-capture.git"
+    "url": "https://github.com/shimoning/kana-capture.git"
   },
   "bugs": {
     "url": "https://github.com/shimoning/kana-capture/issues"
