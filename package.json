@@ -1,7 +1,7 @@
 {
   "name": "@shimoning/kana-capture",
-  "version": "0.1.1",
-  "description": "Kana Japanese characters capture and converter",
+  "version": "0.2.0",
+  "description": "Kana Japanese characters capturer and converter",
   "keywords": [
     "japanese",
     "kana",
@@ -15,25 +15,32 @@
   "author": "Shimon Haga",
   "license": "MIT",
   "repository": {
-    "homepage": "https://github.com/shimoning/kana-capture#readme",
     "type": "git",
     "url": "https://github.com/shimoning/kana-capture.git"
   },
   "bugs": {
     "url": "https://github.com/shimoning/kana-capture/issues"
   },
+  "homepage": "https://shimoning.github.io/kana-capture/",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/shimoning"
   },
   "files": [
-    "dist",
-    "types"
+    "dist"
   ],
-  "main": "src/observer.ts",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "main:umd": "dist/umd/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js",
+    "default": "./dist/cjs/index.js"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run remove:dist",
-    "remove:dist": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' npx ts-node --files ./utils/removeFromDist.ts",
+    "build": "tsc && vite build && npm run remove:dist:garbage",
+    "clean:dist": "rimraf dist",
     "lint": "eslint './src/**/*.{js,ts}'",
     "lint:fix": "eslint --fix './src/**/*.{js,ts}'"
   },
@@ -42,6 +49,7 @@
     "@types/node": "^22.13.1",
     "eslint": "^9.18.0",
     "globals": "^15.14.0",
+    "rimraf": "^5.0.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.21.0",

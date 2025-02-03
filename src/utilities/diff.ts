@@ -1,5 +1,7 @@
 /**
- * Diff
+ * 文字列比較を行う関数
+ *
+ * あくまでこのライブラリのためだけに作成したものなので汎用性はない
  */
 export type DiffResult = {
   before: string;
@@ -9,10 +11,8 @@ export type DiffResult = {
   gap: number;
 }
 
-export function diff(
-  beforeString: string,
-  afterString: string,
-): DiffResult {
+export function diff(beforeString: string, afterString: string): DiffResult
+{
   if (!beforeString.length || !afterString.length) {
     return {
       before: beforeString,
@@ -49,6 +49,7 @@ export function diff(
       diffCharacters.push(afterCharacter)
     }
   }
+
   return {
     before: beforeString,
     after: afterString,

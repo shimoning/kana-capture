@@ -8,12 +8,15 @@ export default defineConfig({
   envDir: './',
   plugins: [
     dts({
-      insertTypesEntry: true,
       // include: 'src/**/*.ts',
       exclude: [
         'src/demo.ts',
+        'docs/**',
       ],
-      outDir: 'types',
+      outDir: [
+        'dist/cjs',
+        'dist/esm',
+      ],
     }),
   ],
   build: {
@@ -21,9 +24,11 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: true,
     minify: true,
+    copyPublicDir: false,
     lib: {
-      entry: ['src/observer.ts'],
+      entry: 'src/index.ts',
       name: 'KanaCapture',
+      fileName: (_, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
       output: [
