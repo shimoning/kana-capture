@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>動作デモ (UMD版) | かなキャプチャ&trade;</title>
+    <title>動作デモ (ESM版) | かなキャプチャ&trade;</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" rel="stylesheet">
@@ -49,8 +49,8 @@
         </nav>
       </div>
       <div class="hero-body">
-        <h2 class="title">動作デモ (UMD版)</h2>
-        <p class="subtitle">通常のJavaScriptファイルとしてグローバルに読み込んだ場合の実装です。</p>
+        <h2 class="title">動作デモ (ESM版)</h2>
+        <p class="subtitle">モジュール版としてimportした場合の実装です。</p>
       </div>
     </header>
     <main id="main" class="container p-2">
@@ -140,13 +140,13 @@
         <ul>
           <li><a href="../"><i class="fa-solid fa-house mr-1"></i>Home</a></li>
           <li><a href="./">Demo</a></li>
-          <li class="is-active"><a href="#" aria-current="page">UMD版</a></li>
+          <li class="is-active"><a href="#" aria-current="page">ESM版</a></li>
         </ul>
       </nav>
       <p class="has-text-centered"><a href="https://shimoning.com" target="_blank">&copy; 2025 Shimoning, Inc.</a></p>
     </footer>
-    <script src="https://cdn.jsdelivr.net/gh/shimoning/kana-capture@0.2.0/dist/umd/index.js" defer></script>
-    <script>
+    <script type="module">
+      import { setupObserver, KanaType, CaptureableCharacterType } from 'https://cdn.jsdelivr.net/gh/shimoning/kana-capture@0.2.0/dist/esm/index.js';
       document.addEventListener('DOMContentLoaded', () => {
         const input = document.querySelector('#input')
 
@@ -156,12 +156,12 @@
         const timingRealtime = document.querySelector('#timing-realtime')
         const timingEnter = document.querySelector('#timing-enter')
 
-        KanaCapture.setupObserver(
+        setupObserver(
           input,
           [
             '#output-hiragana',
-            { element: outputZenkakuKatakana, type: KanaCapture.KanaType.ZenkakuKatakana },
-            { element: outputHankakuKatakana, type: KanaCapture.KanaType.HankakuKatakana },
+            { element: outputZenkakuKatakana, type: KanaType.ZenkakuKatakana },
+            { element: outputHankakuKatakana, type: KanaType.HankakuKatakana },
           ],
           {
             observeInterval: 30,
@@ -170,22 +170,22 @@
             enter: timingEnter,
             clearOnInputEmpty: true,
             captureablePatterns: [
-              KanaCapture.CaptureableCharacterType.HIRAGANA,
-              KanaCapture.CaptureableCharacterType.KUTOUTEN,
-              KanaCapture.CaptureableCharacterType.CHOUON,
-              KanaCapture.CaptureableCharacterType.KAGIKAKKO,
-              KanaCapture.CaptureableCharacterType.ZENKAKU_SPACE,
+              CaptureableCharacterType.HIRAGANA,
+              CaptureableCharacterType.KUTOUTEN,
+              CaptureableCharacterType.CHOUON,
+              CaptureableCharacterType.KAGIKAKKO,
+              CaptureableCharacterType.ZENKAKU_SPACE,
 
               // 全角英数字記号
-              // KanaCapture.CaptureableCharacterType.ZENKAKU_ALPHABET,
-              // KanaCapture.CaptureableCharacterType.ZENKAKU_NUMBER,
-              // KanaCapture.CaptureableCharacterType.ZENKAKU_1BYTE_SYMBOL,
+              // CaptureableCharacterType.ZENKAKU_ALPHABET,
+              // CaptureableCharacterType.ZENKAKU_NUMBER,
+              // CaptureableCharacterType.ZENKAKU_1BYTE_SYMBOL,
 
               // 半角英数字記号 + 半角スペース
-              // KanaCapture.CaptureableCharacterType.HANKAKU_SPACE,
-              // KanaCapture.CaptureableCharacterType.HANKAKU_ALPHABET,
-              // KanaCapture.CaptureableCharacterType.HANKAKU_NUMBER,
-              // KanaCapture.CaptureableCharacterType.HANKAKU_1BYTE_SYMBOL,
+              // CaptureableCharacterType.HANKAKU_SPACE,
+              // CaptureableCharacterType.HANKAKU_ALPHABET,
+              // CaptureableCharacterType.HANKAKU_NUMBER,
+              // CaptureableCharacterType.HANKAKU_1BYTE_SYMBOL,
             ],
           },
         )

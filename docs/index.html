@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>かなキャプチャ&trade;</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-head">
+        <nav class="navbar" aria-label="main navigation">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item">
+                <h1 class="title">かなキャプチャ&trade;</h1>
+              </a>
+              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="nav-menu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a>
+            </div>
+            <div id="nav-menu" class="navbar-menu">
+              <div class="navbar-end">
+                <a class="navbar-item is-active" href="#">
+                  <i class="fa-solid fa-house mr-1"></i>Home
+                </a>
+                <a class="navbar-item" href="demo/">
+                  <i class="fa-solid fa-eye mr-1"></i>Demo
+                </a>
+                <a class="navbar-item" href="https://github.com/shimoning/kana-capture/pkgs/npm/kana-capture" target="_blank">
+                  <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Install
+                </a>
+                <span class="navbar-item">
+                  <a class="button is-info is-inverted" href="https://github.com/shimoning/kana-capture" target="_blank">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Github</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="hero-body">
+        <h2 class="title">使い方</h2>
+      </div>
+      <div class="hero-foot">
+        <nav class="tabs is-fullwidth" aria-label="Main navigation tabs">
+          <ul>
+            <li class="is-active"><a href="#overview">概要</a></li>
+            <li><a href="#demo">デモ</a></li>
+            <li><a href="#packages">利用可能パッケージ</a></li>
+            <li><a href="#captureables">キャプチャ可能な文字種</a></li>
+            <li><a href="#convertables">出力する文字種</a></li>
+            <li><a href="#others">その他</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="container p-2">
+      <section class="section" id="overview">
+        <h3 class="title fa-regular fa-clipboard">概要</h3>
+        <div class="content">
+          <p>
+            かなキャプチャ&trade;は、日本語入力をサポートするためのJavaScriptライブラリです。<br>
+            このライブラリは、入力フィールドに日本語を入力する際に、ひらがなを取得し、指定したinputに出力します。<br>
+            ふりがななどを自動入力させる際に利用できます。<br>
+          </p>
+          <p>
+            入力および出力については、いくつかのオプションを用意しています。
+          </p>
+          <ul>
+            <li>出力をカタカナや半角カタカナに変換する機能</li>
+            <li>入力として英数や記号を受け付けるモード</li>
+            <li>リアルタイムに反映するのではなく、入力が確定したときに反映するモード</li>
+          </ul>
+        </div>
+      </section>
+      <section class="section" id="demo">
+        <h3 class="title fa-solid fa-code">デモ</h3>
+        <div class="content">
+          <p>ウェブサイトに組み込んだ場合のデモです。</p>
+          <ul>
+            <li><a href="./demo/umd.html">UMD版</a></li>
+            <li><a href="./demo/esm.html">ESM版</a></li>
+          </ul>
+        </div>
+      </section>
+      <section class="section" id="packages">
+        <h3 class="title fa-solid fa-book">利用可能パッケージ</h3>
+        <div class="content">
+          <p>ブラウザやサーバサイドでの利用が可能です。<br>ブラウザでの使い方はデモのソースコードをご覧ください。</p>
+          <ul>
+            <li><i class="fa-brands fa-node-js fa-fw mr-1 has-text-primary" title="サーバサイド"></i><i class="fa-solid fa-window-maximize fa-fw mr-1 has-text-info" title="ブラウザ"></i>Unified Module Definition (umd)</li>
+            <li><i class="fa-brands fa-node-js fa-fw mr-1 has-text-primary" title="サーバサイド"></i><i class="fa-solid fa-window-maximize fa-fw mr-1 has-text-info" title="ブラウザ"></i>EcmaScript Module (esm)</li>
+            <li><i class="fa-brands fa-node-js fa-fw mr-1 has-text-primary" title="サーバサイド"></i>CommonJS (cjs)</li>
+          </ul>
+        </div>
+      </section>
+      <section class="section" id="captureables">
+        <h3 class="title fa-regular fa-hand-point-right">キャプチャ可能な文字種</h3>
+        <div class="content">
+          <p>デフォルトは「ひらがな」のみですが、オプションを指定することで他の文字種もキャプチャすることが可能です。</p>
+          <ul>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>ひらがな <span class="has-text-white is-size-7">デフォルト</span></li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>句読点</li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>伸ばし棒</li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>鉤括弧</li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>全角スペース</li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>全角英字</li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>全角数字</li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>全角記号 <span class="has-text-white is-size-7">(一部)</span></li>
+            <li><i class="fa-solid fa-ellipsis-vertical fa-fw mr-1" title="半角"></i>半角英字</li>
+            <li><i class="fa-solid fa-ellipsis-vertical fa-fw mr-1" title="半角"></i>半角数字</li>
+            <li><i class="fa-solid fa-ellipsis-vertical fa-fw mr-1" title="半角"></i>半角記号 <span class="has-text-white is-size-7">(一部)</span></li>
+            <li><i class="fa-solid fa-ellipsis-vertical fa-fw mr-1" title="半角"></i>半角スペース</li>
+          </ul>
+        </div>
+      </section>
+      <section class="section" id="convertables">
+        <h3 class="title fa-regular fa-eye">出力する文字種</h3>
+        <div class="content">
+          <p>デフォルトは「ひらがな」ですが、オプションを指定することでカタカナなどに変換できます。</p>
+          <ul>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>ひらがな <span class="has-text-white is-size-7">デフォルト</span></li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>全角カタカナ</li>
+            <li><i class="fa-solid fa-ellipsis-vertical fa-fw mr-1" title="半角"></i>半角カタカナ</li>
+          </ul>
+        </div>
+      </section>
+      <section class="section" id="others">
+        <h3 class="title fa-solid fa-xmark has-text-danger">非対応</h3>
+        <div class="content">
+          <p>現時点で判明している対応不可能な挙動。</p>
+          <ul>
+            <li>Macでのライブ変換</li>
+            <li>カタカナ入力</li>
+            <li>半角カタカナ入力</li>
+            <li>素早すぎる入力</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="has-text-centered"><a href="https://shimoning.com" target="_blank">&copy; 2025 Shimoning, Inc.</a></p>
+    </footer>
+    <script src="scripts/common.js" defer></script>
+  </body>
+</html>

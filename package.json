@@ -39,7 +39,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run remove:dist:garbage",
+    "build": "tsc && vite build",
     "clean:dist": "rimraf dist",
     "lint": "eslint './src/**/*.{js,ts}'",
     "lint:fix": "eslint --fix './src/**/*.{js,ts}'"

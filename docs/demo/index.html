@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>かなキャプチャ&trade;</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-head">
+        <nav class="navbar" aria-label="main navigation">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item">
+                <h1 class="title">かなキャプチャ&trade;</h1>
+              </a>
+              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="nav-menu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a>
+            </div>
+            <div id="nav-menu" class="navbar-menu">
+              <div class="navbar-end">
+                <a class="navbar-item" href="../">
+                  <i class="fa-solid fa-house mr-1"></i>Home
+                </a>
+                <a class="navbar-item is-active" href="#">
+                  <i class="fa-solid fa-eye mr-1"></i>Demo
+                </a>
+                <a class="navbar-item" href="https://github.com/shimoning/kana-capture/pkgs/npm/kana-capture" target="_blank">
+                  <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Install
+                </a>
+                <span class="navbar-item">
+                  <a class="button is-info is-inverted" href="https://github.com/shimoning/kana-capture" target="_blank">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Github</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="hero-body">
+        <h2 class="title">デモ</h2>
+        <p class="subtitle">ウェブサイトに組み込んだ場合のデモです。</p>
+      </div>
+    </header>
+    <main id="main" class="container p-2">
+      <div class="content">
+        <h3>一覧</h3>
+        <ul>
+          <li><a href="./umd.html">UMD版</a></li>
+          <li><a href="./esm.html">ESM版</a></li>
+          <li class="has-text-warning-light"><i class="fa-solid fa-xmark mr-1"></i>CJS版のデモはありません</li>
+        </ul>
+      </div>
+    </main>
+    <footer class="footer">
+      <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li><a href="../"><i class="fa-solid fa-house mr-1"></i>Home</a></li>
+          <li class="is-active"><a href="#" aria-current="page">Demo</a></li>
+        </ul>
+      </nav>
+      <p class="has-text-centered"><a href="https://shimoning.com" target="_blank">&copy; 2025 Shimoning, Inc.</a></p>
+    </footer>
+    <script src="../scripts/common.js" defer></script>
+  </body>
+</html>
