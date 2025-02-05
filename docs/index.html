@@ -29,12 +29,36 @@
                 <a class="navbar-item is-active" href="#">
                   <i class="fa-solid fa-house mr-1"></i>Home
                 </a>
-                <a class="navbar-item" href="demo/">
-                  <i class="fa-solid fa-eye mr-1"></i>Demo
-                </a>
-                <a class="navbar-item" href="https://github.com/shimoning/kana-capture/pkgs/npm/kana-capture" target="_blank">
-                  <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Install
-                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link">
+                    <i class="fa-solid fa-eye mr-1"></i>Demo
+                  </a>
+                  <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item is-active" href="demo/umd.html">
+                      UMD版
+                    </a>
+                    <a class="navbar-item" href="demo/esm.html">
+                      ESM版
+                    </a>
+                  </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link">
+                    <i class="fa-solid fa-play mr-1"></i>Get start
+                  </a>
+                  <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item" href="start/installation.html">
+                      <i class="fa-solid fa-download mr-1"></i>Installation
+                    </a>
+                    <a class="navbar-item" href="start/setup.html">
+                      <i class="fa-solid fa-code mr-1"></i>Setup
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item" href="start/customize.html">
+                      <i class="fa-solid fa-gear"></i>Customize
+                    </a>
+                  </div>
+                </div>
                 <span class="navbar-item">
                   <a class="button is-info is-inverted" href="https://github.com/shimoning/kana-capture" target="_blank">
                     <span class="icon">
@@ -54,7 +78,7 @@
       <div class="hero-foot">
         <nav class="tabs is-fullwidth" aria-label="Main navigation tabs">
           <ul>
-            <li class="is-active"><a href="#overview">概要</a></li>
+            <li><a href="#overview">概要</a></li>
             <li><a href="#demo">デモ</a></li>
             <li><a href="#packages">利用可能パッケージ</a></li>
             <li><a href="#captureables">キャプチャ可能な文字種</a></li>
@@ -86,7 +110,7 @@
       <section class="section" id="demo">
         <h3 class="title fa-solid fa-code">デモ</h3>
         <div class="content">
-          <p>ウェブサイトに組み込んだ場合のデモです。</p>
+          <p>ウェブサイトに組み込んだ時の動作デモです。</p>
           <ul>
             <li><a href="./demo/umd.html">UMD版</a></li>
             <li><a href="./demo/esm.html">ESM版</a></li>
@@ -109,7 +133,7 @@
         <div class="content">
           <p>デフォルトは「ひらがな」のみですが、オプションを指定することで他の文字種もキャプチャすることが可能です。</p>
           <ul>
-            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>ひらがな <span class="has-text-white is-size-7">デフォルト</span></li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i><strong>ひらがな</strong> <span class="has-text-white is-size-7">デフォルト</span></li>
             <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>句読点</li>
             <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>伸ばし棒</li>
             <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>鉤括弧</li>
@@ -129,7 +153,7 @@
         <div class="content">
           <p>デフォルトは「ひらがな」ですが、オプションを指定することでカタカナなどに変換できます。</p>
           <ul>
-            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>ひらがな <span class="has-text-white is-size-7">デフォルト</span></li>
+            <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i><strong>ひらがな</strong> <span class="has-text-white is-size-7">デフォルト</span></li>
             <li><i class="fa-solid fa-grip-vertical fa-fw mr-1 has-text-white" title="全角"></i>全角カタカナ</li>
             <li><i class="fa-solid fa-ellipsis-vertical fa-fw mr-1" title="半角"></i>半角カタカナ</li>
           </ul>

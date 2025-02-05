@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>デモ | かなキャプチャ&trade;</title>
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <title>Get start | かなキャプチャ&trade;</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" rel="stylesheet">
   </head>
@@ -30,31 +30,31 @@
                   <i class="fa-solid fa-house mr-1"></i>Home
                 </a>
                 <div class="navbar-item has-dropdown is-hoverable">
-                  <a class="navbar-link is-active">
+                  <a class="navbar-link">
                     <i class="fa-solid fa-eye mr-1"></i>Demo
                   </a>
                   <div class="navbar-dropdown is-boxed">
-                    <a class="navbar-item" href="umd.html">
+                    <a class="navbar-item" href="../demo/umd.html">
                       UMD版
                     </a>
-                    <a class="navbar-item" href="esm.html">
+                    <a class="navbar-item" href="../demo/esm.html">
                       ESM版
                     </a>
                   </div>
                 </div>
                 <div class="navbar-item has-dropdown is-hoverable">
-                  <a class="navbar-link">
+                  <a class="navbar-link is-active">
                     <i class="fa-solid fa-play mr-1"></i>Get start
                   </a>
                   <div class="navbar-dropdown is-boxed">
-                    <a class="navbar-item" href="../start/installation.html">
+                    <a class="navbar-item" href="installation.html">
                       <i class="fa-solid fa-download mr-1"></i>Installation
                     </a>
-                    <a class="navbar-item" href="../start/setup.html">
+                    <a class="navbar-item" href="setup.html">
                       <i class="fa-solid fa-code mr-1"></i>Setup
                     </a>
                     <hr class="navbar-divider">
-                    <a class="navbar-item" href="../start/customize.html">
+                    <a class="navbar-item" href="customize.html">
                       <i class="fa-solid fa-gear"></i>Customize
                     </a>
                   </div>
@@ -73,25 +73,42 @@
         </nav>
       </div>
       <div class="hero-body">
-        <h2 class="title">デモ</h2>
-        <p class="subtitle">ウェブサイトに組み込んだ時の動作デモです。</p>
+        <h2 class="title">Get start</h2>
+        <p class="subtitle">ウェブサイトへの導入方法。</p>
       </div>
     </header>
     <main id="main" class="container p-2">
-      <div class="content">
-        <h3>一覧</h3>
-        <ul>
-          <li><a href="./umd.html">UMD版</a></li>
-          <li><a href="./esm.html">ESM版</a></li>
-          <li class="has-text-warning-light"><i class="fa-solid fa-xmark mr-1"></i>CJS版のデモはありません</li>
-        </ul>
-      </div>
+      <section class="container">
+        <h3 class="block has-text-grey-light is-size-5">Start</h3>
+        <div class="fixed-grid has-3-cols">
+          <div class="grid">
+            <div class="cell">
+              <a href="installation.html" class="box">
+                <i class="fa-solid fa-download mr-1"></i><span>Installation</span>
+                <p>インストール方法</p>
+              </a>
+            </div>
+            <div class="cell">
+              <a href="setup.html" class="box">
+                <i class="fa-solid fa-code mr-1"></i><span>Setup</span>
+                <p>実装方法</p>
+              </a>
+            </div>
+            <div class="cell">
+              <a href="customize.html" class="box">
+                <i class="fa-solid fa-gear mr-1"></i><span>Customize</span>
+                <p>カスタマイズ方法</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <footer class="footer">
       <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li><a href="../"><i class="fa-solid fa-house mr-1"></i>Home</a></li>
-          <li class="is-active"><a href="#" aria-current="page">Demo</a></li>
+          <li class="is-active"><a href="#" aria-current="page">Get start</a></li>
         </ul>
       </nav>
       <p class="has-text-centered"><a href="https://shimoning.com" target="_blank">&copy; 2025 Shimoning, Inc.</a></p>

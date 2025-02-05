@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation | かなキャプチャ&trade;</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-head">
+        <nav class="navbar" aria-label="main navigation">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item">
+                <h1 class="title">かなキャプチャ&trade;</h1>
+              </a>
+              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="nav-menu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a>
+            </div>
+            <div id="nav-menu" class="navbar-menu">
+              <div class="navbar-end">
+                <a class="navbar-item" href="../">
+                  <i class="fa-solid fa-house mr-1"></i>Home
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link">
+                    <i class="fa-solid fa-eye mr-1"></i>Demo
+                  </a>
+                  <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item" href="../demo/umd.html">
+                      UMD版
+                    </a>
+                    <a class="navbar-item" href="../demo/esm.html">
+                      ESM版
+                    </a>
+                  </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link is-active">
+                    <i class="fa-solid fa-play mr-1"></i>Get start
+                  </a>
+                  <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item is-active" href="installation.html">
+                      <i class="fa-solid fa-download mr-1"></i>Installation
+                    </a>
+                    <a class="navbar-item" href="setup.html">
+                      <i class="fa-solid fa-code mr-1"></i>Setup
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item" href="customize.html">
+                      <i class="fa-solid fa-gear"></i>Customize
+                    </a>
+                  </div>
+                </div>
+                <span class="navbar-item">
+                  <a class="button is-info is-inverted" href="https://github.com/shimoning/kana-capture" target="_blank">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Github</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="hero-body">
+        <h2 class="title">Installation</h2>
+        <p class="subtitle">インストール方法。</p>
+      </div>
+    </header>
+    <main id="main" class="container p-2">
+      <section class="section" id="option-cdn">
+        <h3 class="block has-text-grey-light is-size-5">
+          <span class="tag is-white is-medium is-pulled-right">推奨</span>
+          Option 1. <strong>CDN を利用する方法</strong>
+        </h3>
+        <p class="block">
+          <a href="https://www.jsdelivr.com/package/gh/shimoning/kana-capture" target="_blank">jsDelivr</a> を利用することで、直接ウェブサイトに導入することができます。
+        </p>
+        <div class="tabs is-boxed mb-0">
+          <ul>
+            <li class="is-active"><a data-target="cdn-umd" data-group="cdn">UMD</a></li>
+            <li><a data-target="cdn-esm" data-group="cdn">ESM</a></li>
+          </ul>
+        </div>
+        <div class="tab-contents" data-group="cdn">
+          <figure id="cdn-umd">
+            <pre><code>&lt;script src="https://cdn.jsdelivr.net/gh/shimoning/kana-capture@0.2.0/dist/umd/index.js" defer&gt;&lt;/script></code></pre>
+          </figure>
+          <figure id="cdn-esm">
+            <pre><code>&lt;script type="module"&gt;
+  import * as KanaCapture from 'https://cdn.jsdelivr.net/gh/shimoning/kana-capture@0.2.0/dist/esm/index.js';
+&lt;/script&gt;</code></pre>
+          </figure>
+        </div>
+      </section>
+      <section class="section" id="option-github">
+        <h3 class="block has-text-grey-light is-size-5">
+          Option 2. <strong>Github に公開されているものをダウロード</strong>
+        </h3>
+        <p class="block">
+          <a href="https://github.com/shimoning/kana-capture/releases" target="_blank">Github のリリースページ</a> から `Source code` を ZIP でダウンロードし、解凍してウェブサイトに導入します。
+        </p>
+        <div class="content">
+          <ul>
+            <li><a href="https://github.com/shimoning/kana-capture/releases" target="_blank">Github のリリースページ</a> へ移動し、目的のバージョンを確認 (基本的に最新の利用を推奨)。</li>
+            <li>Source code (zip) をダウンロードして解凍</li>
+            <li><strong>dist</strong> ディレクトリ内にある umd もしくは esm ディレクトリの中身をサイトに設置</li>
+          </ul>
+        </div>
+        <div class="tabs is-boxed mb-0">
+          <ul>
+            <li class="is-active"><a data-target="download-umd" data-group="download">UMD</a></li>
+            <li><a data-target="download-esm" data-group="download">ESM</a></li>
+          </ul>
+        </div>
+        <div class="tab-contents" data-group="download">
+          <figure id="download-umd">
+            <pre><code>&lt;script src="path/to/index.js" defer&gt;&lt;/script></code></pre>
+          </figure>
+          <figure id="download-esm">
+            <pre><code>&lt;script type="module"&gt;
+  import * as KanaCapture from 'path/to/index.js';
+&lt;/script&gt;</code></pre>
+          </figure>
+        </div>
+      </section>
+      <section class="section" id="option-node">
+        <h3 class="block has-text-grey-light is-size-5">
+          Option 3. <strong>NPM パッケージをインストール</strong>
+        </h3>
+        <p class="block">
+          Github packages を利用して<a href="https://github.com/shimoning/kana-capture/pkgs/npm/kana-capture" target="_blank">NPM</a> のパッケージとして配布しています。<br>
+          Node.js で利用する場合は npm もしくは yarn 等でインストールしてください。<br>
+          その際<strong>.npmrc</strong>へ以下の記述が必要になります。
+        </p>
+        <figure class="mb-3">
+          <pre><code>@shimoning:registry=https://npm.pkg.github.com</code></pre>
+        </figure>
+        <div class="tabs is-boxed mb-0">
+          <ul>
+            <li class="is-active"><a data-target="node-npm" data-group="node">npm</a></li>
+            <li><a data-target="node-yarn" data-group="node">yarn</a></li>
+          </ul>
+        </div>
+        <div class="tab-contents" data-group="node">
+          <figure id="node-npm">
+            <pre><code>npm install @shimoning/kana-capture</code></pre>
+          </figure>
+          <figure id="node-yarn">
+            <pre><code>yarn add @shimoning/kana-capture</code></pre>
+          </figure>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li><a href="../"><i class="fa-solid fa-house mr-1"></i>Home</a></li>
+          <li><a href="./"><i class="fa-solid fa-play mr-1"></i>Get start</a></li>
+          <li class="is-active"><a href="#" aria-current="page">Installation</a></li>
+        </ul>
+      </nav>
+      <p class="has-text-centered"><a href="https://shimoning.com" target="_blank">&copy; 2025 Shimoning, Inc.</a></p>
+    </footer>
+    <script src="../scripts/common.js" defer></script>
+  </body>
+</html>

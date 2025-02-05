@@ -29,12 +29,36 @@
                 <a class="navbar-item" href="../">
                   <i class="fa-solid fa-house mr-1"></i>Home
                 </a>
-                <a class="navbar-item is-active" href="./">
-                  <i class="fa-solid fa-eye mr-1"></i>Demo
-                </a>
-                <a class="navbar-item" href="https://github.com/shimoning/kana-capture/pkgs/npm/kana-capture" target="_blank">
-                  <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Install
-                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link is-active">
+                    <i class="fa-solid fa-eye mr-1"></i>Demo
+                  </a>
+                  <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item is-active" href="umd.html">
+                      UMD版
+                    </a>
+                    <a class="navbar-item" href="esm.html">
+                      ESM版
+                    </a>
+                  </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link">
+                    <i class="fa-solid fa-play mr-1"></i>Get start
+                  </a>
+                  <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item" href="../start/installation.html">
+                      <i class="fa-solid fa-download mr-1"></i>Installation
+                    </a>
+                    <a class="navbar-item" href="../start/setup.html">
+                      <i class="fa-solid fa-code mr-1"></i>Setup
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item" href="../start/customize.html">
+                      <i class="fa-solid fa-gear"></i>Customize
+                    </a>
+                  </div>
+                </div>
                 <span class="navbar-item">
                   <a class="button is-info is-inverted" href="https://github.com/shimoning/kana-capture" target="_blank">
                     <span class="icon">
@@ -133,6 +157,63 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <hr>
+      <div class="content">
+        <h3>コード</h3>
+        <p>実際にこのページに利用しているコードの実装例になります。</p>
+      </div>
+
+      <div class="has-background-light">
+        <figure>
+          <pre><code>&lt;script src="https://cdn.jsdelivr.net/gh/shimoning/kana-capture@0.2.0/dist/umd/index.js" defer&gt;&lt;/script&gt;
+&lt;script&gt;
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.querySelector('#input')
+
+    const outputZenkakuKatakana = document.querySelector('#output-zenkaku-katakana')
+    const outputHankakuKatakana = document.querySelector('#output-hankaku-katakana')
+
+    const timingRealtime = document.querySelector('#timing-realtime')
+    const timingEnter = document.querySelector('#timing-enter')
+
+    KanaCapture.setupObserver(
+      input,
+      [
+        '#output-hiragana',
+        { element: outputZenkakuKatakana, type: KanaCapture.KanaType.ZenkakuKatakana },
+        { element: outputHankakuKatakana, type: KanaCapture.KanaType.HankakuKatakana },
+      ],
+      {
+        observeInterval: 30,
+        debug: false,
+        realtime: timingRealtime,
+        enter: timingEnter,
+        clearOnInputEmpty: true,
+        captureablePatterns: [
+          KanaCapture.CaptureableCharacterType.HIRAGANA,
+          KanaCapture.CaptureableCharacterType.KUTOUTEN,
+          KanaCapture.CaptureableCharacterType.CHOUON,
+          KanaCapture.CaptureableCharacterType.KAGIKAKKO,
+          KanaCapture.CaptureableCharacterType.ZENKAKU_SPACE,
+
+          // 全角英数字記号
+          // KanaCapture.CaptureableCharacterType.ZENKAKU_ALPHABET,
+          // KanaCapture.CaptureableCharacterType.ZENKAKU_NUMBER,
+          // KanaCapture.CaptureableCharacterType.ZENKAKU_1BYTE_SYMBOL,
+
+          // 半角英数字記号 + 半角スペース
+          // KanaCapture.CaptureableCharacterType.HANKAKU_SPACE,
+          // KanaCapture.CaptureableCharacterType.HANKAKU_ALPHABET,
+          // KanaCapture.CaptureableCharacterType.HANKAKU_NUMBER,
+          // KanaCapture.CaptureableCharacterType.HANKAKU_1BYTE_SYMBOL,
+        ],
+      },
+    )
+  })
+&lt;/script&gt;</code></pre>
+        </figure>
       </div>
     </main>
     <footer class="footer">
