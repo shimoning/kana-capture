@@ -73,6 +73,10 @@ export function setupObserver(
       ? OutputTiming.REALTIME // realtime=true, realtime=false & enter=false
       : OutputTiming.ENTER  // realtime=false & enter=true
   }
+  if (outputTimingIsStatic) {
+    _checkOutputTiming()
+  }
+  _debug('outputTimingIsStatic', { outputTimingIsStatic })
 
   // 出力先を整える
   const activeOutputs: Required<Output>[] = []
