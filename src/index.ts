@@ -225,8 +225,11 @@ export function setupObserver(
    * 反映する
    * @returns void
    */
-  function _reflect() {
+  function _reflect(clear: boolean = false) {
     activeOutputs.forEach(({ element }) => {
+      if (clear) {
+        element.value = ''
+      }
       if (element.dataset['kana']) {
         element.value += element.dataset['kana']
         element.removeAttribute('data-kana')
@@ -293,13 +296,15 @@ export function setupObserver(
   inputElement.addEventListener('keyup', (e: KeyboardEvent) => {
     _debug('keyup', { observing, e })
     if (e.code === 'Enter') {
+      let clear = false
       if (options.clearOnInputEmpty && inputElement.value === '') {
+        clear = true
         _reset()
         _set('')
-      } else {
-        if (outputTiming === OutputTiming.ENTER) {
-          _reflect()
-        }
+
+      }
+      if (outputTiming === OutputTiming.ENTER) {
+        _reflect(clear)
       }
     }
   })
