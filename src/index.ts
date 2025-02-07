@@ -212,11 +212,15 @@ export function setupObserver(
 
     activeOutputs.forEach(({ element, type }, index) => {
       const converted = kanaConverter(type, inputValue)
-      _debug('converted', { type, string, inputValue, after: converted, before: outputValues[index] })
+      _debug('converted', { type, string, inputValue, after: converted, before: outputValues[index], bufferKana: element.dataset['bufferKana'], bufferOther: element.dataset['bufferOther'] })
       if (outputTiming === OutputTiming.REALTIME) {
         element.value = outputValues[index] + converted
       } else if (outputTiming === OutputTiming.ENTER) {
-        element.dataset['kana'] = outputValues[index] = converted
+        if (observing) {
+          element.dataset['bufferKana'] = converted
+        } else {
+          element.dataset['bufferOther'] = (element.dataset['bufferOther'] ?? '') + converted
+        }
       }
     })
   }
@@ -229,10 +233,15 @@ export function setupObserver(
     activeOutputs.forEach(({ element }) => {
       if (clear) {
         element.value = ''
+        element.dataset['bufferOther'] = ''
+        element.dataset['bufferKana'] = ''
+        return
       }
-      if (element.dataset['kana']) {
-        element.value += element.dataset['kana']
-        element.removeAttribute('data-kana')
+      const buffer = (element.dataset['bufferOther'] ?? '') + (element.dataset['bufferKana'] ?? '')
+      if (buffer) {
+        element.value += buffer
+        element.dataset['bufferOther'] = ''
+        element.dataset['bufferKana'] = ''
       }
     })
   }

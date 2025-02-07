@@ -26,9 +26,8 @@ setupObserver(
   {
     observeInterval: 30,
     debug: false,
-    // realtime: timingRealtime,
-    // enter: timingEnter,
-    enter: true,
+    realtime: timingRealtime,
+    enter: timingEnter,
     clearOnInputEmpty: true,
     captureablePatterns: [
       CaptureableCharacterType.HIRAGANA,
