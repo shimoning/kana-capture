@@ -196,7 +196,7 @@ export function setupObserver(
 
   /**
    * セットする
-   * @param string
+   * @param string string
    */
   function _set(string: string) {
     _debug('set', { defaultString, string, inputValue, outputValues })
@@ -214,32 +214,60 @@ export function setupObserver(
       if (outputTiming === OutputTiming.REALTIME) {
         element.value = outputValues[index] + converted
       } else if (outputTiming === OutputTiming.ENTER) {
-        if (observing) {
-          element.dataset['bufferKana'] = converted
-        } else {
-          element.dataset['bufferOther'] = (element.dataset['bufferOther'] ?? '') + converted
-        }
+        _setBuffer(element, converted)
       }
     })
   }
 
   /**
+   * 文字を反映せずに一時保存する
+   *
+   * @param element HTMLInputElement
+   * @param string  string
+   * @returns void
+   */
+  function _setBuffer(element: HTMLInputElement, string: string) {
+    if (observing) {
+      element.dataset['bufferKana'] = string
+    } else {
+      element.dataset['bufferOther'] = (element.dataset['bufferOther'] ?? '') + string
+    }
+  }
+  /**
+   * バッファをクリアする
+   * @param element HTMLInputElement
+   * @returns void
+   */
+  function _clearBuffer(element: HTMLInputElement) {
+    console.log('clear buffer')
+    element.dataset['bufferOther'] = ''
+    element.dataset['bufferKana'] = ''
+  }
+  // 予約
+  // /**
+  //  * 全てのバッファをクリアする
+  //  * @returns void
+  //  */
+  // function _clearBufferAll() {
+  //   activeOutputs.forEach(({ element }) => {
+  //     _clearBuffer(element)
+  //   })
+  // }
+  /**
    * 反映する
    * @returns void
    */
-  function _reflect(clear: boolean = false) {
+  function _reflectBufferAll(clear: boolean = false) {
     activeOutputs.forEach(({ element }) => {
       if (clear) {
         element.value = ''
-        element.dataset['bufferOther'] = ''
-        element.dataset['bufferKana'] = ''
+        _clearBuffer(element)
         return
       }
       const buffer = (element.dataset['bufferOther'] ?? '') + (element.dataset['bufferKana'] ?? '')
       if (buffer) {
         element.value += buffer
-        element.dataset['bufferOther'] = ''
-        element.dataset['bufferKana'] = ''
+        _clearBuffer(element)
       }
     })
   }
@@ -301,24 +329,30 @@ export function setupObserver(
     }
   })
   inputElement.addEventListener('keyup', (e: KeyboardEvent) => {
-    _debug('keyup', { observing, e })
+    _debug('keyup', e.code, { observing, e })
     if (e.code === 'Enter') {
       let clear = false
       if (options.clearOnInputEmpty && inputElement.value === '') {
         clear = true
         _reset()
         _set('')
-
       }
       if (outputTiming === OutputTiming.ENTER) {
-        _reflect(clear)
+        _reflectBufferAll(clear)
       }
     }
+    if (e.code === 'Backspace') {
+      // FIXME: REALTIME -> 日本語入力中にバックスペースで全て消すと1文字目が残る
+      // FIXME: ENTER -> 途中入力状態で、日本語入力中にバックスペースで全て消し、Enterで確定もしくは半角入力後エンターすると1文字目が残る
+      _debug('backspace', { outputTiming }, inputElement.value)
+    }
   })
+
   if (options.realtime instanceof HTMLInputElement) {
     options.realtime.addEventListener('change', () => {
       _debug('realtime change')
       _checkOutputTiming()
+      _reflectBufferAll()
     })
   }
   if (options.enter instanceof HTMLInputElement) {
