@@ -1,4 +1,5 @@
 .git/
+.github/
 .vscode/
 node_modules/
 src/
@@ -10,3 +11,4 @@ tsconfig.json
 eslint.config.mjs
 vite-env.d.ts
 vite.config.mts
+.npmrc

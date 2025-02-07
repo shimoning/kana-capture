@@ -227,6 +227,7 @@ export function setupObserver(
    * @returns void
    */
   function _setBuffer(element: HTMLInputElement, string: string) {
+    _debug('set buffer', { observing, element, string })
     if (observing) {
       element.dataset['bufferKana'] = string
     } else {
@@ -239,7 +240,7 @@ export function setupObserver(
    * @returns void
    */
   function _clearBuffer(element: HTMLInputElement) {
-    console.log('clear buffer')
+    _debug('clear buffer')
     element.dataset['bufferOther'] = ''
     element.dataset['bufferKana'] = ''
   }
@@ -343,7 +344,7 @@ export function setupObserver(
     }
     if (e.code === 'Backspace') {
       // FIXME: REALTIME -> 日本語入力中にバックスペースで全て消すと1文字目が残る
-      // FIXME: ENTER -> 途中入力状態で、日本語入力中にバックスペースで全て消し、Enterで確定もしくは半角入力後エンターすると1文字目が残る
+      // FIXME: ENTER -> 日本語入力中にバックスペースで全て消し、Enterで確定もしくは半角入力後エンターすると1文字目が残る
       _debug('backspace', { outputTiming }, inputElement.value)
     }
   })

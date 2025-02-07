@@ -2,7 +2,7 @@
 input に入力された「かな」を取得し、別の input に出力します。
 ユーザ入力に合わせてフリガナ欄を自動で埋めるのに利用可能です。
 
-![version](https://img.shields.io/github/v/release/shimoning/kana-capture?style=flat)
+![NPM Version](https://img.shields.io/npm/v/%40shimoning%2Fkana-capture?style=flat)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)
 ![JavaScript](https://img.shields.io/badge/-JavaScript-333333.svg?logo=JavaScript&style=flat)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-333333.svg?logo=TypeScript&style=flat)
@@ -17,6 +17,9 @@ input に入力された「かな」を取得し、別の input に出力しま�
 * CommonJS版
 * EcmaScript版
 * UMD版 (通常のブラウザで使う場合はこちら)
+
+## デモ
+https://shimoning.github.io/kana-capture/demo/umd.html
 
 ## ドキュメント
 詳しい使い方などは [こちら](https://shimoning.github.io/kana-capture/) から確認してください。

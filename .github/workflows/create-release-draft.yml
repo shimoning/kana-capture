@@ -1,0 +1,56 @@
+name: create release draft
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  create_release_draft:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+
+      # - name: Package install
+      #   run: npm install --frozen-lockfile
+
+      # - name: Production build
+      #   run: npm run build
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          draft: true
+
+      - name: Zip assets
+        run: tar -czf KanaCapture-${{ github.ref_name }}.tar.gz ./dist
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./KanaCapture.zip
+          asset_name: KanaCapture-${{ github.ref_name }}.tar.gz
+          asset_content_type: application/gzip
+
+      # - name: Create release
+      #   run: |
+      #     gh release create ${{ github.ref_name }} --draft --generate-notes KanaCapture-${{ github.ref_name }}.tar.gz
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

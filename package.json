@@ -23,7 +23,7 @@
   },
   "homepage": "https://shimoning.github.io/kana-capture/",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "files": [
     "dist"
