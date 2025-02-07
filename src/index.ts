@@ -58,8 +58,9 @@ export function setupObserver(
 
   // 出力のタイミング
   let outputTiming = OutputTiming.REALTIME
-  const outputTimingIsStatic = !(options.realtime instanceof HTMLInputElement)
-    && !(options.enter instanceof HTMLInputElement)
+  const realtimeIsDynamic = options.realtime instanceof HTMLInputElement
+  const enterIsDynamic = options.enter instanceof HTMLInputElement
+  const outputTimingIsStatic = !realtimeIsDynamic && !enterIsDynamic
   function _checkOutputTiming() {
     const realtime =
       options.realtime &&
@@ -76,7 +77,7 @@ export function setupObserver(
   if (outputTimingIsStatic) {
     _checkOutputTiming()
   }
-  _debug('outputTimingIsStatic', { outputTimingIsStatic })
+  _debug('outputTiming', { outputTiming, outputTimingIsStatic, realtimeIsDynamic, enterIsDynamic })
 
   // 出力先を整える
   const activeOutputs: Required<Output>[] = []
@@ -147,9 +148,6 @@ export function setupObserver(
       return
     }
     timer = setInterval(() => {
-      if (!outputTimingIsStatic) {
-        _checkOutputTiming()
-      }
       _observe()
     }, options.observeInterval ?? 30)
   }
@@ -317,4 +315,16 @@ export function setupObserver(
       }
     }
   })
+  if (options.realtime instanceof HTMLInputElement) {
+    options.realtime.addEventListener('change', () => {
+      _debug('realtime change')
+      _checkOutputTiming()
+    })
+  }
+  if (options.enter instanceof HTMLInputElement) {
+    options.enter.addEventListener('change', () => {
+      _debug('enter change')
+      _checkOutputTiming()
+    })
+  }
 }
