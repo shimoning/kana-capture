@@ -1,88 +1,99 @@
 import { diff as P } from "./utilities/diff.js";
-import { generateCaptureableRegExp as w, CaptureableCharacterType as R, extractor as M } from "./utilities/extractor.js";
-import { KanaType as y, kanaConverter as x } from "./utilities/kanaConverter.js";
-var q = /* @__PURE__ */ ((i) => (i[i.REALTIME = 0] = "REALTIME", i[i.ENTER = 1] = "ENTER", i))(q || {});
-function K(i, E, n = {
+import { generateCaptureableRegExp as w, CaptureableCharacterType as S, extractor as C } from "./utilities/extractor.js";
+import { KanaType as I, kanaConverter as q } from "./utilities/kanaConverter.js";
+var D = /* @__PURE__ */ ((c) => (c[c.REALTIME = 0] = "REALTIME", c[c.ENTER = 1] = "ENTER", c))(D || {});
+function z(c, v, r = {
   observeInterval: 30,
   debug: !1,
   realtime: !0,
   enter: !1,
   clearOnInputEmpty: !1,
-  captureablePatterns: R.HIRAGANA
+  captureablePatterns: S.HIRAGANA
 }) {
-  const A = w(
-    n.captureablePatterns ?? R.HIRAGANA
-  ), a = typeof i == "string" ? document.querySelector(i) : i;
+  const y = w(
+    r.captureablePatterns ?? S.HIRAGANA
+  ), a = typeof c == "string" ? document.querySelector(c) : c;
   if (!a)
     throw new Error("input element not found");
-  let p = 0;
-  const b = !(n.realtime instanceof HTMLInputElement) && !(n.enter instanceof HTMLInputElement);
-  function L() {
-    const e = n.realtime && (n.realtime === !0 || n.realtime instanceof HTMLInputElement && n.realtime.checked), t = n.enter && (n.enter === !0 || n.enter instanceof HTMLInputElement && n.enter.checked);
-    p = e || !t ? 0 : 1;
+  let s = 0;
+  const L = r.realtime instanceof HTMLInputElement, T = r.enter instanceof HTMLInputElement, A = !L && !T;
+  function E() {
+    const e = r.realtime && (r.realtime === !0 || r.realtime instanceof HTMLInputElement && r.realtime.checked), t = r.enter && (r.enter === !0 || r.enter instanceof HTMLInputElement && r.enter.checked);
+    s = e || !t ? 0 : 1;
   }
-  b && L(), r("outputTimingIsStatic", { outputTimingIsStatic: b });
-  const f = [], T = (e) => {
+  A && E(), n("outputTiming", { outputTiming: s, outputTimingIsStatic: A, realtimeIsDynamic: L, enterIsDynamic: T });
+  const u = [], H = (e) => {
     if (typeof e == "string") {
       const t = document.querySelectorAll(e);
-      for (const d of t)
-        f.push({ element: d, type: y.Hiragana });
-    } else e instanceof HTMLInputElement ? f.push({ element: e, type: y.Hiragana }) : f.push({
+      for (const f of t)
+        u.push({ element: f, type: I.Hiragana });
+    } else e instanceof HTMLInputElement ? u.push({ element: e, type: I.Hiragana }) : u.push({
       element: e.element,
-      type: e.type ?? y.Hiragana
+      type: e.type ?? I.Hiragana
     });
   };
-  if (Array.isArray(E))
-    for (const e of E)
-      T(e);
+  if (Array.isArray(v))
+    for (const e of v)
+      H(e);
   else
-    T(E);
-  let c = !1, o = "", m = "", s = "";
-  const l = new Array(f.length).fill("");
-  function k() {
-    r("reset"), o = "", m = "", s = "";
-    for (let e = 0; e < f.length; e++)
-      l[e] = "";
+    H(v);
+  let i = !1, o = "", m = "", d = "";
+  const b = new Array(u.length).fill("");
+  function _() {
+    n("reset"), o = "", m = "", d = "";
+    for (let e = 0; e < u.length; e++)
+      b[e] = "";
   }
-  function g() {
-    o = a.value, f.forEach(({ element: e }, t) => {
-      l[t] = e.value;
-    }), r("setup", a.value, { defaultString: o, activeOutputs: f });
+  function h() {
+    o = a.value, u.forEach(({ element: e }, t) => {
+      b[t] = e.value;
+    }), n("setup", a.value, { defaultString: o, activeOutputs: u });
   }
-  let u;
-  function S() {
-    r("start", { timer: u }), !u && (u = setInterval(() => {
-      b || L(), C();
-    }, n.observeInterval ?? 30));
+  let l;
+  function x() {
+    n("start", { timer: l }), !l && (l = setInterval(() => {
+      B();
+    }, r.observeInterval ?? 30));
   }
-  function H() {
-    r("end", { timer: u }), u && (clearInterval(u), u = void 0);
+  function M() {
+    n("end", { timer: l }), l && (clearInterval(l), l = void 0);
   }
-  function C() {
+  function B() {
     const e = a.value;
-    if (r("observe", { observing: c, inputString: e, defaultString: o, currentString: m, outputValues: l }), e === "")
+    if (n("observe", { observing: i, inputString: e, defaultString: o, currentString: m, outputValues: b }), e === "")
       return;
     const t = P(o, e);
-    m !== t.diff && (m = t.diff, c && v(m));
+    m !== t.diff && (m = t.diff, i && p(m));
   }
-  function v(e) {
-    r("set", { defaultString: o, string: e, inputValue: s, outputValues: l });
-    const t = M({
+  function p(e) {
+    n("set", { defaultString: o, string: e, inputValue: d, outputValues: b });
+    const t = C({
       input: e,
-      patterns: A
+      patterns: y
     });
-    t.length === e.length && (s = t), f.forEach(({ element: d, type: _ }, I) => {
-      const h = x(_, s);
-      r("converted", { type: _, string: e, inputValue: s, after: h, before: l[I] }), p === 0 ? d.value = l[I] + h : p === 1 && (d.dataset.kana = l[I] = h);
-    });
-  }
-  function N() {
-    f.forEach(({ element: e }) => {
-      e.dataset.kana && (e.value += e.dataset.kana, e.removeAttribute("data-kana"));
+    t.length === e.length && (d = t), u.forEach(({ element: f, type: R }, K) => {
+      const g = q(R, d);
+      n("converted", { type: R, string: e, inputValue: d, after: g, before: b[K], bufferKana: f.dataset.bufferKana, bufferOther: f.dataset.bufferOther }), s === 0 ? f.value = b[K] + g : s === 1 && N(f, g);
     });
   }
-  function r(e, ...t) {
-    if (n.debug) {
+  function N(e, t) {
+    i ? e.dataset.bufferKana = t : e.dataset.bufferOther = (e.dataset.bufferOther ?? "") + t;
+  }
+  function k(e) {
+    console.log("clear buffer"), e.dataset.bufferOther = "", e.dataset.bufferKana = "";
+  }
+  function O(e = !1) {
+    u.forEach(({ element: t }) => {
+      if (e) {
+        t.value = "", k(t);
+        return;
+      }
+      const f = (t.dataset.bufferOther ?? "") + (t.dataset.bufferKana ?? "");
+      f && (t.value += f, k(t));
+    });
+  }
+  function n(e, ...t) {
+    if (r.debug) {
       if (t.length === 0) {
         console.info("debug", { message: e });
         return;
@@ -91,29 +102,37 @@ function K(i, E, n = {
     }
   }
   a.addEventListener("focus", () => {
-    r("focus"), g();
+    n("focus"), h();
   }), a.addEventListener("blur", () => {
-    r("blur"), H();
+    n("blur"), M();
   }), a.addEventListener("compositionstart", (e) => {
-    r("compositionstart", { e }), g(), S(), c = !0;
+    n("compositionstart", { e }), h(), x(), i = !0;
   }), a.addEventListener("compositionend", (e) => {
-    r("compositionend", { e }), H(), v(s), k(), c = !1;
+    n("compositionend", { e }), M(), p(d), _(), i = !1;
   }), a.addEventListener("beforeinput", (e) => {
-    if (r("beforeinput", { observing: c, e }), !c && !e.isComposing && e.data) {
-      const t = e.data, d = M({
+    if (n("beforeinput", { observing: i, e }), !i && !e.isComposing && e.data) {
+      const t = e.data, f = C({
         input: t,
-        patterns: A
+        patterns: y
       });
-      t && t === d && (g(), v(t));
+      t && t === f && (h(), p(t));
     }
   }), a.addEventListener("keyup", (e) => {
-    r("keyup", { observing: c, e }), e.code === "Enter" && (n.clearOnInputEmpty && a.value === "" ? (k(), v("")) : p === 1 && N());
+    if (n("keyup", e.code, { observing: i, e }), e.code === "Enter") {
+      let t = !1;
+      r.clearOnInputEmpty && a.value === "" && (t = !0, _(), p("")), s === 1 && O(t);
+    }
+    e.code === "Backspace" && n("backspace", { outputTiming: s }, a.value);
+  }), r.realtime instanceof HTMLInputElement && r.realtime.addEventListener("change", () => {
+    n("realtime change"), E(), O();
+  }), r.enter instanceof HTMLInputElement && r.enter.addEventListener("change", () => {
+    n("enter change"), E();
   });
 }
 export {
-  R as CaptureableCharacterType,
-  y as KanaType,
-  q as OutputTiming,
-  K as setupObserver
+  S as CaptureableCharacterType,
+  I as KanaType,
+  D as OutputTiming,
+  z as setupObserver
 };
 //# sourceMappingURL=index.js.map
