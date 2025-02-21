@@ -12,6 +12,7 @@ export type { CaptureableCharacterPattern }
 export type Options = {
   observeInterval?: number; // unit: ms
   debug?: boolean; // logging if true
+  event?: boolean; // logging if true
   realtime?: boolean | HTMLInputElement;
   enter?: boolean | HTMLInputElement;
   clearOnInputEmpty?: boolean;
@@ -185,11 +186,6 @@ export function setupObserver(
     }
     currentString = diffResult.diff
 
-    // 変換完了している場合は何もしない
-    if (!observing) {
-      return
-    }
-
     // セットする
     _set(currentString)
   }
@@ -197,6 +193,7 @@ export function setupObserver(
   /**
    * セットする
    * @param string string
+   * @returns void
    */
   function _set(string: string) {
     _debug('set', { defaultString, string, inputValue, outputValues })
@@ -217,6 +214,22 @@ export function setupObserver(
         _setBuffer(element, converted)
       }
     })
+  }
+
+  /**
+   * 文字を抽出してセットする
+   * @param candidate string
+   * @returns void
+   */
+  function _extractAndSet(candidate: string) {
+    const extracted = extractor({
+      input: candidate,
+      patterns: captureablePatterns,
+    })
+    if (candidate && candidate === extracted) {
+      _setup()
+      _set(extracted)
+    }
   }
 
   /**
@@ -285,52 +298,73 @@ export function setupObserver(
       return
     }
     if (args.length === 0) {
-      console.info('debug', { message })
+      console.log('%c[debug]', 'background-color: #ff6d13; color: #fffafa;', { message })
       return
     }
-    console.info('debug', { message }, ...args)
+    console.log('%c[debug]', 'background-color: #ff6d13; color: #fffafa;', { message }, ...args)
+  }
+
+  /**
+   * イベントログ
+   * @param message
+   * @param args
+   * @return void
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function _event(message: string, ...args: any[]) {
+    if (!options.event) {
+      return
+    }
+    if (args.length === 0) {
+      console.info('%c[event]', 'background-color: #fffafa; color: #303030;', { message })
+      return
+    }
+    console.info('%c[event]', 'background-color: #fffafa; color: #303030;', { message }, ...args)
   }
 
   /**
    * Event listeners
    */
-  inputElement.addEventListener('focus', () => {
-    _debug('focus')
+  inputElement.addEventListener('focus', (e: FocusEvent) => {
+    _event('focus', { e })
     _setup()
   })
-  inputElement.addEventListener('blur', () => {
-    _debug('blur')
+  inputElement.addEventListener('blur', (e: FocusEvent) => {
+    _event('blur', { e })
     _end()
   })
   inputElement.addEventListener('compositionstart', (e: CompositionEvent) => {
-    _debug('compositionstart', { e })
+    _event('compositionstart', { e })
     _setup()
     _start()
     observing = true
   })
   inputElement.addEventListener('compositionend', (e: CompositionEvent) => {
-    _debug('compositionend', { e })
+    _event('compositionend', { e, inputValue })
     _end()
-    _set(inputValue)
     _reset()
     observing = false
-  })
-  inputElement.addEventListener('beforeinput', (e: InputEvent) => {
-    _debug('beforeinput', { observing, e })
-    if (!observing && !e.isComposing && e.data) {
-      const candidate = e.data
-      const extracted = extractor({
-        input: candidate,
-        patterns: captureablePatterns,
-      })
-      if (candidate && candidate === extracted) {
-        _setup()
-        _set(candidate)
-      }
+
+    // windows での全角スペース対策
+    if (['　', ' '].includes(e.data)) {
+      _debug('spaces', '"' + e.data + '"')
+      _extractAndSet(e.data)
     }
   })
+  inputElement.addEventListener('beforeinput', (e: InputEvent) => {
+    _event('beforeinput', { observing, e })
+    if (!observing && !e.isComposing && e.data) {
+      _extractAndSet(e.data)
+    }
+  })
+  inputElement.addEventListener('input', (e: Event) => { // 本当は InputEvent がくるが TS の定義が Event
+    _event('input', { observing, e })
+  })
+  inputElement.addEventListener('keydown', (e: KeyboardEvent) => {
+    _event('keydown', { observing, e })
+  })
   inputElement.addEventListener('keyup', (e: KeyboardEvent) => {
-    _debug('keyup', e.code, { observing, e })
+    _event('keyup', { observing, e }, e.code)
     if (e.code === 'Enter') {
       let clear = false
       if (options.clearOnInputEmpty && inputElement.value === '') {

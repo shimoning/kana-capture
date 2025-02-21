@@ -26,6 +26,7 @@ setupObserver(
   {
     observeInterval: 30,
     debug: false,
+    event: true,
     realtime: timingRealtime,
     enter: timingEnter,
     // enter: true,
@@ -50,3 +51,5 @@ setupObserver(
     ],
   },
 )
+
+document.getElementById('input')!.focus()

@@ -5,6 +5,7 @@ export type { CaptureableCharacterPattern };
 export type Options = {
     observeInterval?: number;
     debug?: boolean;
+    event?: boolean;
     realtime?: boolean | HTMLInputElement;
     enter?: boolean | HTMLInputElement;
     clearOnInputEmpty?: boolean;
