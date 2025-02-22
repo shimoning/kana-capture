@@ -1,14 +1,17 @@
 # かなキャプチャ
 input に入力された「かな」を取得し、別の input に出力します。
-ユーザ入力に合わせてフリガナ欄を自動で埋めるのに利用可能です。
+
+ユーザ入力に合わせて、ふりがな欄などを自動入力するのに便利です。
 
 ![NPM Version](https://img.shields.io/npm/v/%40shimoning%2Fkana-capture?style=flat)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)
 ![JavaScript](https://img.shields.io/badge/-JavaScript-333333.svg?logo=JavaScript&style=flat)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-333333.svg?logo=TypeScript&style=flat)
 
+![動作デモ](./docs/images/demo.gif)
+
 ## 概要
-フリガナの出力は以下の3種類に対応しています。
+ふりがなの出力は以下の3種類に対応しています。
 * ひらがな
 * 全角カタカナ
 * 半角ｶﾀｶﾅ
@@ -38,6 +41,7 @@ npm install @shimoning/kana-capture
 
 ### 有償カスタマイズ
 当ライブラリはオープンソースですが、有償にてカスタマイズを承っております。
+
 カスタマイズしたコードは同様にオープンソースとして公開されます。
 
 ### 有償サポート
@@ -45,4 +49,5 @@ npm install @shimoning/kana-capture
 
 ### お問い合わせ
 [GoogleForm](https://forms.gle/DK3DWstBCKdPS86X6) に必要事項ご記入の上送信してください。
+
 件名につきましては「公開ライブラリに関するお問い合わせ」を選択してください。
