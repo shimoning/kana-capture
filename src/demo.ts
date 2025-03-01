@@ -1,4 +1,4 @@
-import { setupObserver, KanaType, CaptureableCharacterType } from './index.ts'
+import { setupObserver, KanaType, CapturableCharacterType } from './index.ts'
 
 const outputHiragana = document.querySelector<HTMLInputElement>(
   '#output-hiragana1',
@@ -31,23 +31,23 @@ setupObserver(
     enter: timingEnter,
     // enter: true,
     clearOnInputEmpty: true,
-    captureablePatterns: [
-      CaptureableCharacterType.HIRAGANA,
-      CaptureableCharacterType.KUTOUTEN,
-      CaptureableCharacterType.CHOUON,
-      CaptureableCharacterType.KAGIKAKKO,
-      CaptureableCharacterType.ZENKAKU_SPACE,
+    capturablePatterns: [
+      CapturableCharacterType.HIRAGANA,
+      CapturableCharacterType.KUTOUTEN,
+      CapturableCharacterType.CHOUON,
+      CapturableCharacterType.KAGIKAKKO,
+      CapturableCharacterType.ZENKAKU_SPACE,
 
       // 全角英数字記号
-      CaptureableCharacterType.ZENKAKU_ALPHABET,
-      CaptureableCharacterType.ZENKAKU_NUMBER,
-      CaptureableCharacterType.ZENKAKU_1BYTE_SYMBOL,
+      CapturableCharacterType.ZENKAKU_ALPHABET,
+      CapturableCharacterType.ZENKAKU_NUMBER,
+      CapturableCharacterType.ZENKAKU_1BYTE_SYMBOL,
 
       // 半角英数字記号 + 半角スペース
-      CaptureableCharacterType.HANKAKU_SPACE,
-      CaptureableCharacterType.HANKAKU_ALPHABET,
-      CaptureableCharacterType.HANKAKU_NUMBER,
-      CaptureableCharacterType.HANKAKU_1BYTE_SYMBOL,
+      CapturableCharacterType.HANKAKU_SPACE,
+      CapturableCharacterType.HANKAKU_ALPHABET,
+      CapturableCharacterType.HANKAKU_NUMBER,
+      CapturableCharacterType.HANKAKU_1BYTE_SYMBOL,
     ],
   },
 )

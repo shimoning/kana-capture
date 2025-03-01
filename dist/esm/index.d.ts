@@ -1,7 +1,7 @@
-import { CaptureableCharacterPattern, CaptureableCharacterType } from './utilities/extractor';
+import { CapturableCharacterPattern, CapturableCharacterType } from './utilities/extractor';
 import { KanaType } from './utilities/kanaConverter';
-export { KanaType, CaptureableCharacterType };
-export type { CaptureableCharacterPattern };
+export { KanaType, CapturableCharacterType };
+export type { CapturableCharacterPattern };
 export type Options = {
     observeInterval?: number;
     debug?: boolean;
@@ -9,7 +9,7 @@ export type Options = {
     realtime?: boolean | HTMLInputElement;
     enter?: boolean | HTMLInputElement;
     clearOnInputEmpty?: boolean;
-    captureablePatterns?: CaptureableCharacterPattern | CaptureableCharacterPattern[];
+    capturablePatterns?: CapturableCharacterPattern | CapturableCharacterPattern[];
 };
 export type OutputElement = Output | HTMLInputElement | string;
 export type Output = {

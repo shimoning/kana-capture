@@ -1,13 +1,13 @@
 import { diff } from './utilities/diff'
 import {
-  CaptureableCharacterPattern,
-  CaptureableCharacterType,
-  generateCaptureableRegExp,
+  CapturableCharacterPattern,
+  CapturableCharacterType,
+  generateCapturableRegExp,
   extractor,
 } from './utilities/extractor'
 import { kanaConverter, KanaType } from './utilities/kanaConverter'
-export { KanaType, CaptureableCharacterType }
-export type { CaptureableCharacterPattern }
+export { KanaType, CapturableCharacterType }
+export type { CapturableCharacterPattern }
 
 export type Options = {
   observeInterval?: number; // unit: ms
@@ -16,7 +16,7 @@ export type Options = {
   realtime?: boolean | HTMLInputElement;
   enter?: boolean | HTMLInputElement;
   clearOnInputEmpty?: boolean;
-  captureablePatterns?: CaptureableCharacterPattern | CaptureableCharacterPattern[];
+  capturablePatterns?: CapturableCharacterPattern | CapturableCharacterPattern[];
 };
 
 // TODO: support other elements (e.g. HTMLDivElement, HTMLSpanElement, HTMLTextAreaElement)
@@ -40,13 +40,13 @@ export function setupObserver(
     realtime: true,
     enter: false,
     clearOnInputEmpty: false,
-    captureablePatterns: CaptureableCharacterType.HIRAGANA,
+    capturablePatterns: CapturableCharacterType.HIRAGANA,
   },
 ) {
   // 入力値を受け付けるパターン
   // TODO: support dynamic patterns
-  const captureablePatterns = generateCaptureableRegExp(
-    options.captureablePatterns ?? CaptureableCharacterType.HIRAGANA,
+  const capturablePatterns = generateCapturableRegExp(
+    options.capturablePatterns ?? CapturableCharacterType.HIRAGANA,
   )
 
   // 入力元を整える
@@ -199,7 +199,7 @@ export function setupObserver(
     _debug('set', { defaultString, string, inputValue, outputValues })
     const extracted = extractor({
       input: string,
-      patterns: captureablePatterns,
+      patterns: capturablePatterns,
     })
     if (extracted.length === string.length) {
       inputValue = extracted
@@ -224,7 +224,7 @@ export function setupObserver(
   function _extractAndSet(candidate: string) {
     const extracted = extractor({
       input: candidate,
-      patterns: captureablePatterns,
+      patterns: capturablePatterns,
     })
     if (candidate && candidate === extracted) {
       _setup()

@@ -1,5 +1,5 @@
 import { diff as q } from "./utilities/diff.js";
-import { generateCaptureableRegExp as D, CaptureableCharacterType as x, extractor as C } from "./utilities/extractor.js";
+import { generateCapturableRegExp as D, CapturableCharacterType as x, extractor as C } from "./utilities/extractor.js";
 import { KanaType as I, kanaConverter as G } from "./utilities/kanaConverter.js";
 var V = /* @__PURE__ */ ((c) => (c[c.REALTIME = 0] = "REALTIME", c[c.ENTER = 1] = "ENTER", c))(V || {});
 function J(c, E, r = {
@@ -8,10 +8,10 @@ function J(c, E, r = {
   realtime: !0,
   enter: !1,
   clearOnInputEmpty: !1,
-  captureablePatterns: x.HIRAGANA
+  capturablePatterns: x.HIRAGANA
 }) {
   const L = D(
-    r.captureablePatterns ?? x.HIRAGANA
+    r.capturablePatterns ?? x.HIRAGANA
   ), n = typeof c == "string" ? document.querySelector(c) : c;
   if (!n)
     throw new Error("input element not found");
@@ -144,7 +144,7 @@ function J(c, E, r = {
   });
 }
 export {
-  x as CaptureableCharacterType,
+  x as CapturableCharacterType,
   I as KanaType,
   V as OutputTiming,
   J as setupObserver

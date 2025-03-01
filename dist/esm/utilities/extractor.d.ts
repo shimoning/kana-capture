@@ -1,8 +1,8 @@
 /**
  * Extractable
  */
-export type CaptureableCharacterPattern = string | RegExp | CaptureableCharacterType;
-export declare enum CaptureableCharacterType {
+export type CapturableCharacterPattern = string | RegExp | CapturableCharacterType;
+export declare enum CapturableCharacterType {
     HIRAGANA = 0,
     KUTOUTEN = 1,
     CHOUON = 2,
@@ -16,10 +16,10 @@ export declare enum CaptureableCharacterType {
     ZENKAKU_1BYTE_SYMBOL = 10,
     HANKAKU_1BYTE_SYMBOL = 11
 }
-export declare const CaptureableCharacterMap: Record<CaptureableCharacterType, RegExp>;
+export declare const CapturableCharacterMap: Record<CapturableCharacterType, RegExp>;
 export type ExtractorInput = {
     input: string;
-    patterns?: CaptureableCharacterPattern | CaptureableCharacterPattern[];
+    patterns?: CapturableCharacterPattern | CapturableCharacterPattern[];
 };
 export declare function extractor({ input, patterns, }: ExtractorInput): string;
-export declare function generateCaptureableRegExp(patterns: CaptureableCharacterPattern | CaptureableCharacterPattern[]): RegExp;
+export declare function generateCapturableRegExp(patterns: CapturableCharacterPattern | CapturableCharacterPattern[]): RegExp;

@@ -37,9 +37,9 @@ function _(A) {
   return new RegExp(E.join("|"), "g");
 }
 export {
-  g as CaptureableCharacterMap,
-  U as CaptureableCharacterType,
+  g as CapturableCharacterMap,
+  U as CapturableCharacterType,
   o as extractor,
-  _ as generateCaptureableRegExp
+  _ as generateCapturableRegExp
 };
 //# sourceMappingURL=extractor.js.map
