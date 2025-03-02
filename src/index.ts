@@ -1,9 +1,3 @@
-/**
- * @license
- * KanaCapture v0.3.0
- * Copyright (c) 2025 Shimoning, Inc.
- * Released under the MIT License.
- */
 import { diff } from './utilities/diff'
 import {
   CapturableCharacterPattern,

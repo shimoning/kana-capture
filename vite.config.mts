@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import license from 'rollup-plugin-license'
+import path from 'node:path'
+
 
 export default defineConfig(() => ({
   root: './',
@@ -7,6 +10,32 @@ export default defineConfig(() => ({
   publicDir: 'docs',
   envDir: './',
   plugins: [
+    license({
+      sourcemap: true,
+
+      banner: {
+        commentStyle: 'ignored',
+        content: {
+          file: path.join(__dirname, 'LICENSE'),
+        },
+      },
+
+      thirdParty: {
+        includeSelf: true,
+        multipleVersions: true,
+        output: [
+          {
+            file: path.join(__dirname, 'dist/cjs', 'license.txt'),
+          },
+          {
+            file: path.join(__dirname, 'dist/esm', 'license.txt'),
+          },
+          {
+            file: path.join(__dirname, 'dist/umd', 'license.txt'),
+          },
+        ],
+      },
+    }),
     dts({
       // include: 'src/**/*.ts',
       exclude: [
