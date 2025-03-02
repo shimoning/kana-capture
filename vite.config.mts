@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 
-export default defineConfig({
+export default defineConfig(() => ({
   root: './',
   base: './',
   publicDir: 'docs',
@@ -43,4 +43,4 @@ export default defineConfig({
       usePolling: true,
     },
   },
-})
+}))

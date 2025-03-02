@@ -1,6 +1,12 @@
 import { diff as q } from "./utilities/diff.js";
 import { generateCapturableRegExp as D, CapturableCharacterType as x, extractor as C } from "./utilities/extractor.js";
 import { KanaType as I, kanaConverter as G } from "./utilities/kanaConverter.js";
+/**
+ * @license
+ * KanaCapture v0.3.0
+ * Copyright (c) 2025 Shimoning, Inc.
+ * Released under the MIT License.
+ */
 var V = /* @__PURE__ */ ((c) => (c[c.REALTIME = 0] = "REALTIME", c[c.ENTER = 1] = "ENTER", c))(V || {});
 function J(c, E, r = {
   observeInterval: 30,
@@ -25,8 +31,8 @@ function J(c, E, r = {
   const u = [], _ = (e) => {
     if (typeof e == "string") {
       const t = document.querySelectorAll(e);
-      for (const l of t)
-        u.push({ element: l, type: I.Hiragana });
+      for (const o of t)
+        u.push({ element: o, type: I.Hiragana });
     } else e instanceof HTMLInputElement ? u.push({ element: e, type: I.Hiragana }) : u.push({
       element: e.element,
       type: e.type ?? I.Hiragana
@@ -60,7 +66,7 @@ function J(c, E, r = {
   }
   function N() {
     const e = n.value;
-    if (a("observe", { observing: f, inputString: e, defaultString: d, currentString: p, outputValues: v }), e === "")
+    if (a("observe", { composing: f, inputString: e, defaultString: d, currentString: p, outputValues: v }), e === "")
       return;
     const t = q(d, e);
     p !== t.diff && (p = t.diff, g(p));
@@ -71,9 +77,9 @@ function J(c, E, r = {
       input: e,
       patterns: L
     });
-    t.length === e.length && (b = t), u.forEach(({ element: l, type: K }, w) => {
+    t.length === e.length && (b = t), u.forEach(({ element: o, type: K }, w) => {
       const y = G(K, b);
-      a("converted", { type: K, string: e, inputValue: b, after: y, before: v[w], bufferKana: l.dataset.bufferKana, bufferOther: l.dataset.bufferOther }), s === 0 ? l.value = v[w] + y : s === 1 && P(l, y);
+      a("converted", { type: K, string: e, inputValue: b, after: y, before: v[w], bufferKana: o.dataset.bufferKana, bufferOther: o.dataset.bufferOther }), s === 0 ? o.value = v[w] + y : s === 1 && P(o, y);
     });
   }
   function O(e) {
@@ -84,7 +90,7 @@ function J(c, E, r = {
     e && e === t && (h(), g(t));
   }
   function P(e, t) {
-    a("set buffer", { observing: f, element: e, string: t }), f ? e.dataset.bufferKana = t : e.dataset.bufferOther = (e.dataset.bufferOther ?? "") + t;
+    a("set buffer", { composing: f, element: e, string: t }), f ? e.dataset.bufferKana = t : e.dataset.bufferOther = (e.dataset.bufferOther ?? "") + t;
   }
   function R(e) {
     a("clear buffer"), e.dataset.bufferOther = "", e.dataset.bufferKana = "";
@@ -95,8 +101,8 @@ function J(c, E, r = {
         t.value = "", R(t);
         return;
       }
-      const l = (t.dataset.bufferOther ?? "") + (t.dataset.bufferKana ?? "");
-      l && (t.value += l, R(t));
+      const o = (t.dataset.bufferOther ?? "") + (t.dataset.bufferKana ?? "");
+      o && (t.value += o, R(t));
     });
   }
   function a(e, ...t) {
@@ -108,7 +114,7 @@ function J(c, E, r = {
       console.log("%c[debug]", "background-color: #ff6d13; color: #fffafa;", { message: e }, ...t);
     }
   }
-  function o(e, ...t) {
+  function l(e, ...t) {
     if (r.event) {
       if (t.length === 0) {
         console.info("%c[event]", "background-color: #fffafa; color: #303030;", { message: e });
@@ -118,21 +124,21 @@ function J(c, E, r = {
     }
   }
   n.addEventListener("focus", (e) => {
-    o("focus", { e }), h();
+    l("focus", { e }), h();
   }), n.addEventListener("blur", (e) => {
-    o("blur", { e }), M();
+    l("blur", { e }), M();
   }), n.addEventListener("compositionstart", (e) => {
-    o("compositionstart", { e }), h(), B(), f = !0;
+    l("compositionstart", { e }), h(), B(), f = !0;
   }), n.addEventListener("compositionend", (e) => {
-    o("compositionend", { e, inputValue: b }), M(), H(), f = !1, ["　", " "].includes(e.data) && (a("spaces", '"' + e.data + '"'), O(e.data));
+    l("compositionend", { e, inputValue: b }), M(), H(), f = !1, ["　", " "].includes(e.data) && (a("spaces", '"' + e.data + '"'), O(e.data));
   }), n.addEventListener("beforeinput", (e) => {
-    o("beforeinput", { observing: f, e }), !f && !e.isComposing && e.data && O(e.data);
+    l("beforeinput", { composing: f, e }), !f && !e.isComposing && e.data && O(e.data);
   }), n.addEventListener("input", (e) => {
-    o("input", { observing: f, e });
+    l("input", { composing: f, e });
   }), n.addEventListener("keydown", (e) => {
-    o("keydown", { observing: f, e });
+    l("keydown", { composing: f, e });
   }), n.addEventListener("keyup", (e) => {
-    if (o("keyup", { observing: f, e }, e.code), e.code === "Enter") {
+    if (l("keyup", { composing: f, e }, e.code), e.code === "Enter") {
       let t = !1;
       r.clearOnInputEmpty && n.value === "" && (t = !0, H(), g("")), s === 1 && S(t);
     }
