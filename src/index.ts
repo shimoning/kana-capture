@@ -106,7 +106,7 @@ export function setupObserver(
   }
 
   // 状態管理
-  let observing: boolean = false
+  let composing: boolean = false
   let defaultString: string = ''
   let currentString: string = ''
 
@@ -170,7 +170,7 @@ export function setupObserver(
    */
   function _observe() {
     const inputString = inputElement!.value
-    _debug('observe', { observing, inputString, defaultString, currentString, outputValues })
+    _debug('observe', { composing, inputString, defaultString, currentString, outputValues })
 
     // 空文字の場合は何もしない
     if (inputString === '') {
@@ -240,8 +240,8 @@ export function setupObserver(
    * @returns void
    */
   function _setBuffer(element: HTMLInputElement, string: string) {
-    _debug('set buffer', { observing, element, string })
-    if (observing) {
+    _debug('set buffer', { composing, element, string })
+    if (composing) {
       element.dataset['bufferKana'] = string
     } else {
       element.dataset['bufferOther'] = (element.dataset['bufferOther'] ?? '') + string
@@ -337,13 +337,13 @@ export function setupObserver(
     _event('compositionstart', { e })
     _setup()
     _start()
-    observing = true
+    composing = true
   })
   inputElement.addEventListener('compositionend', (e: CompositionEvent) => {
     _event('compositionend', { e, inputValue })
     _end()
     _reset()
-    observing = false
+    composing = false
 
     // windows での全角スペース対策
     if (['　', ' '].includes(e.data)) {
@@ -352,19 +352,19 @@ export function setupObserver(
     }
   })
   inputElement.addEventListener('beforeinput', (e: InputEvent) => {
-    _event('beforeinput', { observing, e })
-    if (!observing && !e.isComposing && e.data) {
+    _event('beforeinput', { composing, e })
+    if (!composing && !e.isComposing && e.data) {
       _extractAndSet(e.data)
     }
   })
-  inputElement.addEventListener('input', (e: Event) => { // 本当は InputEvent がくるが TS の定義が Event
-    _event('input', { observing, e })
+  inputElement.addEventListener('input', (e: Event) => { // 実際には InputEvent; TS の定義上は Event
+    _event('input', { composing, e })
   })
   inputElement.addEventListener('keydown', (e: KeyboardEvent) => {
-    _event('keydown', { observing, e })
+    _event('keydown', { composing, e })
   })
   inputElement.addEventListener('keyup', (e: KeyboardEvent) => {
-    _event('keyup', { observing, e }, e.code)
+    _event('keyup', { composing, e }, e.code)
     if (e.code === 'Enter') {
       let clear = false
       if (options.clearOnInputEmpty && inputElement.value === '') {
