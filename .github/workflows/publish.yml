@@ -1,6 +1,6 @@
 # .github/workflows/publish.yml
 
-name: publish package
+name: Publish Package
 
 on:
   release:

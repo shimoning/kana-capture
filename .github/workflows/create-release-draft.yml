@@ -1,9 +1,9 @@
-name: create release draft
+name: Create Release Draft
 
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   create_release_draft:
